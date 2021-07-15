@@ -1,0 +1,2 @@
+a:4:{s:4:"hash";s:0:"";s:5:"mtime";i:1626318266;s:6:"expire";i:9999999999;s:4:"tags";s:38:"37a_REFLECTION,37a_REFLECTION,37a_MAGE";}
+[{"name":"orderId","type":"int","isDefaultValueAvailable":false,"defaultValue":null},{"name":"customerInfo","type":"MageWorx\\OrderEditor\\Api\\Data\\OrderManager\\CustomerInfoInterface","isDefaultValueAvailable":false,"defaultValue":null}]

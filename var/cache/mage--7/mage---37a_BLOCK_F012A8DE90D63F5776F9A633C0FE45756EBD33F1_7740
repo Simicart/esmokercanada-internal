@@ -1,0 +1,20 @@
+a:4:{s:4:"hash";s:0:"";s:5:"mtime";i:1626318195;s:6:"expire";i:1626321795;s:4:"tags";s:48:"37a_BLOCK_HTML,37a_CAT_P_7740,37a_CAT_P,37a_MAGE";}
+a:2:{s:8:"policies";a:1:{i:0;a:3:{s:2:"id";s:10:"script-src";s:5:"hosts";a:0:{}s:6:"hashes";a:4:{s:44:"kYeiY1zEv5RlZpxqvoSPYhz/bqlPIpeiH6s+ckDOdwk=";s:6:"sha256";s:44:"48sb4Je7XoTlJimO7pm/+fwXo5BBI6oU4Vci+QqK2/I=";s:6:"sha256";s:44:"HUjaEs6gPI/8f06cL8Wy1zR3vaPjSDAYb+YL5IRBsf4=";s:6:"sha256";s:44:"9N89WMndeXJQQmez3zcXupuWhb0jRtPuHYgRtBa1Cjo=";s:6:"sha256";}}}s:4:"html";s:3497:"<div class="swatch-opt" data-role="swatch-options"></div>
+
+<script type="text/x-magento-init">
+    {
+        "[data-role=swatch-options]": {
+            "Magento_Swatches/js/swatch-renderer": {
+                "jsonConfig": {"attributes":{"241":{"id":"241","code":"colours","label":"Colour","options":[{"id":"402","label":"Black","products":["6873"]},{"id":"416","label":"Stainless","products":["6872"]}],"position":"0"}},"template":"CA$<%- data.price %>","currencyFormat":"CA$%s","optionPrices":{"6873":{"baseOldPrice":{"amount":32.99},"oldPrice":{"amount":32.99},"basePrice":{"amount":16.49},"finalPrice":{"amount":16.49},"tierPrices":[],"msrpPrice":{"amount":0}},"6872":{"baseOldPrice":{"amount":32.99},"oldPrice":{"amount":32.99},"basePrice":{"amount":16.49},"finalPrice":{"amount":16.49},"tierPrices":[],"msrpPrice":{"amount":0}}},"priceFormat":{"pattern":"CA$%s","precision":2,"requiredPrecision":2,"decimalSymbol":".","groupSymbol":",","groupLength":3,"integerRequired":false},"prices":{"baseOldPrice":{"amount":32.99},"oldPrice":{"amount":32.99},"basePrice":{"amount":16.49},"finalPrice":{"amount":16.49}},"productId":"7740","chooseText":"Choose an Option...","images":{"6873":[{"thumb":"http:\/\/esmoker.magestore.com\/media\/catalog\/product\/cache\/0cdce5c25ba30c0b18685c494360d988\/a\/s\/aspire_nautilus_x_black.jpg","img":"http:\/\/esmoker.magestore.com\/media\/catalog\/product\/cache\/4b1fb4e654053a846ab53c9bcdbe599b\/a\/s\/aspire_nautilus_x_black.jpg","full":"http:\/\/esmoker.magestore.com\/media\/catalog\/product\/cache\/ae51c625ae753e2ddb39f951c8807da9\/a\/s\/aspire_nautilus_x_black.jpg","caption":"Aspire Nautilus X-Black for CA$32.99, by Aspire","position":"1","isMain":true,"type":"image","videoUrl":null}],"6872":[{"thumb":"http:\/\/esmoker.magestore.com\/media\/catalog\/product\/cache\/0cdce5c25ba30c0b18685c494360d988\/a\/s\/aspire_nautilus_x_silver.jpg","img":"http:\/\/esmoker.magestore.com\/media\/catalog\/product\/cache\/4b1fb4e654053a846ab53c9bcdbe599b\/a\/s\/aspire_nautilus_x_silver.jpg","full":"http:\/\/esmoker.magestore.com\/media\/catalog\/product\/cache\/ae51c625ae753e2ddb39f951c8807da9\/a\/s\/aspire_nautilus_x_silver.jpg","caption":"Aspire Nautilus X-Stainless for CA$32.99, by Aspire","position":"1","isMain":true,"type":"image","videoUrl":null}]},"index":{"6873":{"241":"402"},"6872":{"241":"416"}}},
+                "jsonSwatchConfig": {"241":{"402":{"type":"2","value":"http:\/\/esmoker.magestore.com\/media\/attribute\/swatch\/swatch_image\/30x20\/b\/l\/black.jpg","thumb":"http:\/\/esmoker.magestore.com\/media\/attribute\/swatch\/swatch_thumb\/110x90\/b\/l\/black.jpg","label":"Black"},"416":{"type":"2","value":"http:\/\/esmoker.magestore.com\/media\/attribute\/swatch\/swatch_image\/30x20\/c\/h\/chrome_swatch.jpg","thumb":"http:\/\/esmoker.magestore.com\/media\/attribute\/swatch\/swatch_thumb\/110x90\/c\/h\/chrome_swatch.jpg","label":"Stainless"},"additional_data":"{\"swatch_input_type\":\"visual\",\"update_product_preview_image\":\"0\",\"use_product_image_for_swatch\":\"0\"}"}},
+                "mediaCallback": "http\u003A\u002F\u002Fesmoker.magestore.com\u002Fswatches\u002Fajax\u002Fmedia\u002F",
+                "gallerySwitchStrategy": "prepend",
+                "jsonSwatchImageSizeConfig": {"swatchImage":{"width":30,"height":20},"swatchThumb":{"height":90,"width":110}},
+                "showTooltip": 1            }
+        },
+        "*" : {
+            "Magento_Swatches/js/catalog-add-to-cart": {}
+        }
+    }
+</script>
+";}

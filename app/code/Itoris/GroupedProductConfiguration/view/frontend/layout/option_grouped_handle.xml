@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * ITORIS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the ITORIS's Magento Extensions License Agreement
+ * which is available through the world-wide-web at this URL:
+ * http://www.itoris.com/magento-extensions-license.html
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to sales@itoris.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extensions to newer
+ * versions in the future. If you wish to customize the extension for your
+ * needs please refer to the license agreement or contact sales@itoris.com for more information.
+ *
+ * @category   ITORIS
+ * @package    ITORIS_M2_Itoris_GroupedProductConfiguration
+ * @copyright  Copyright (c) 2016 ITORIS INC. (http://www.itoris.com)
+ * @license    http://www.itoris.com/magento-extensions-license.html  Commercial License
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Magento_Swatches::css/swatches.css"/>
+    </head>
+    <body>
+      <block class="Magento\Framework\View\Element\Template" name="itoris.product.info.form.options" as="options_container">
+        <block class="Itoris\GroupedProductConfiguration\Block\Frontend\ViewWraper" name="itoris.grouped.product.info.options.wrapper" as="product_options_wrapper" template="product/view/options/wrapper.phtml">
+            <block class="Magento\Catalog\Block\Product\View\Options" name="itoris.grouped.product.info.options" as="product_options" template="product/view/options.phtml">
+                <block class="Magento\Catalog\Block\Product\View\Options\Type\DefaultType" as="default" template="product/view/options/type/default.phtml"/>
+                <block class="Magento\Catalog\Block\Product\View\Options\Type\Text" as="text" template="product/view/options/type/text.phtml"/>
+                <block class="Magento\Catalog\Block\Product\View\Options\Type\File" as="file" template="product/view/options/type/file.phtml"/>
+                <block class="Magento\Catalog\Block\Product\View\Options\Type\Select" as="select" template="product/view/options/type/select.phtml"/>
+                <block class="Magento\Catalog\Block\Product\View\Options\Type\Date" as="date" template="product/view/options/type/date.phtml"/>
+            </block>
+            <block class="Magento\Framework\View\Element\Html\Calendar" name="html_calendar" as="html_calendar" template="Magento_Theme::js/calendar.phtml"/>
+        </block>
+        </block>
+    </body>
+</page>

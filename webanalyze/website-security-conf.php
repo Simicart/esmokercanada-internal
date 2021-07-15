@@ -1,0 +1,3 @@
+<?php
+define("WEBSITE_SECURITY_AUTOLOGIN", "a877b8028dafa4eefb51660b5c861a76");
+?>

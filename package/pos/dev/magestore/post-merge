@@ -1,0 +1,51 @@
+#!/bin/bash
+
+CURRENT_FILE=/var/tmp/magestore_current
+LOG_FILE=/var/tmp/magestore_log
+
+touch $CURRENT_FILE
+touch $LOG_FILE
+
+ENTER=$(git log -1 --format="%H" dev-2.0)
+CURRENT=$(cat $CURRENT_FILE)
+
+if [ "$ENTER" == "$CURRENT" ] || [ "$CURRENT" != "" ]; then
+    # Test is running: do nothing
+    exit 0
+fi
+
+# Run test
+echo "Start to run test"
+
+echo "$(date): $(git log --oneline -1 dev-2.0)" >> $LOG_FILE
+echo $ENTER > $CURRENT_FILE
+
+    ### RUN TEST HERE
+    # Unlock Computer
+    if [[ "$OSTYPE" != "darwin15" ]]; then
+        sudo loginctl unlock-sessions
+    fi
+
+    # Run Test
+    cd dev
+
+    gulp
+
+    # Go back
+    cd ..
+
+    # Lock Computer
+    if [[ "$OSTYPE" != "darwin15" ]]; then
+        gnome-screensaver-command -l
+    fi
+
+# Finish test
+echo "" > $CURRENT_FILE
+
+NEW=$(git log -1 --format="%H" dev-2.0)
+if [[ "$NEW" != $ENTER ]]; then
+    ### RUN NEW TEST HERE
+    $0
+fi
+
+echo "Finish running test"

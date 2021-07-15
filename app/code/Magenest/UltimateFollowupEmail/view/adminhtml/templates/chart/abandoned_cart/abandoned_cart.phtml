@@ -1,0 +1,58 @@
+<?php
+/** @var $block \Magenest\UltimateFollowupEmail\Block\Adminhtml\Chart\AbandonedCart */
+?>
+<div class="range" id="period-range" style="margin-bottom: 35px">
+    <h4>Reports for specific dates: </h4>
+    <span class="field-row">
+        <label for="period-from" class="admin__control-support-text">
+            <span><?php /* @escapeNotVerified */ echo __('From') ?>:</span>
+        </label>
+        <input type="text" class="input-text no-changes admin__control-text" name="period[from]" id="period-from" value="<?php echo $block->getPeriodFromParam() ?>" placeholder="From">
+    </span>
+    <span class="field-row">
+        <label for="period-to" class="admin__control-support-text">
+            <span><?php /* @escapeNotVerified */ echo __('To') ?>:</span>
+        </label>
+            <input type="text" class="input-text no-changes admin__control-text" name="period[to]" id="period-to" value="<?php echo $block->getPeriodToParam() ?>" placeholder="To">
+    </span>
+    <button id="period-submit" type="button" class="primary">Submit</button>
+</div>
+<?php
+if (!$block->getAbandonedCarts()) {
+    echo '<div class=\'message message-warning warning\'>There are no abandoned carts for this period of time.</div>';
+} else {
+    ?>
+    <section class="admin__page-section">
+        <div class="admin__page-section-title">
+        <span class="title"><?php /* @escapeNotVerified */echo 'Abandoned Cart Line Chart' ?></span>
+        </div>
+        <?php if ($block->getPeriodFromParam() || $block->getPeriodToParam()) : ?>
+        <div>
+            <?php echo $block->getPeriodFromParam()? '(From: '.$block->getPeriodFromParam(): '(' ?>
+            <?php echo $block->getPeriodToParam()? ' To: '.$block->getPeriodToParam().')': ')' ?>
+        </div>
+        <?php endif; ?>
+        <div class="admin__page-section-content">
+            <div id="abandoned_cart_line_chart" style="clear: both;"></div>
+        </div>
+    </section>
+
+    <section class="admin__page-section">
+        <div class="admin__page-section-title">
+        <span class="title"><?php /* @escapeNotVerified */
+            echo __('Abandoned Cart Rates') ?></span>
+        </div>
+        <?php if ($block->getPeriodFromParam() || $block->getPeriodToParam()) : ?>
+            <div>
+                <?php echo $block->getPeriodFromParam()? '(From: '.$block->getPeriodFromParam(): '(' ?>
+                <?php echo $block->getPeriodToParam()? ' To: '.$block->getPeriodToParam().')': ')' ?>
+            </div>
+        <?php endif; ?>
+        <div class="admin__page-section-content" style="width: 65%; margin: auto">
+            <div id="abandoned_cart_chart" style="float: left"></div>
+            <div id="guest_abandoned_cart_chart" style="float: left"></div>
+        </div>
+    </section>
+    <?php
+}
+?>

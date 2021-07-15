@@ -1,0 +1,66 @@
+<?php
+/**
+ * ITORIS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the ITORIS's Magento Extensions License Agreement
+ * which is available through the world-wide-web at this URL:
+ * http://www.itoris.com/magento-extensions-license.html
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to sales@itoris.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extensions to newer
+ * versions in the future. If you wish to customize the extension for your
+ * needs please refer to the license agreement or contact sales@itoris.com for more information.
+ *
+ * @category   ITORIS
+ * @package    ITORIS_M2_Itoris_GroupedProductConfiguration
+ * @copyright  Copyright (c) 2016 ITORIS INC. (http://www.itoris.com)
+ * @license    http://www.itoris.com/magento-extensions-license.html  Commercial License
+ */
+?>
+<?php $_helper = $this->helper('Magento\Catalog\Helper\Output'); ?>
+<?php $carthelper = $this->helper('Itoris\GroupedProductConfiguration\Helper\Cart') ?>
+<?php $_product = $block->getProduct(); ?>
+<?php $_helperEM=$this->helper('Itoris\GroupedProductConfiguration\Helper\ExtensionConfig');  ?>
+<?php $view = $_helperEM->factory('Itoris\GroupedProductConfiguration\Block\Frontend\View'); ?>
+<div class="product-add-form">
+    <form action="<?php /* @escapeNotVerified */ echo $view->getSubmitUrl($_product) ?>" method="post"
+          id="product_addtocart_form"  enctype="multipart/form-data">
+        <input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $_product->getId() ?>" />
+        <input type="hidden" name="selected_configurable_option" value="" />
+        <input type="hidden" name="related_product" id="related-products-field" value="" />
+        <?php echo $block->getBlockHtml('formkey')?>
+        <?php echo $block->getChildHtml('form_top'); ?>
+        <?php if (!$block->hasOptions()):?>
+            <?php echo $block->getChildHtml('product_info_form_content'); ?>
+        <?php else:?>
+            <?php if ($_product->isSaleable() && $block->getOptionsContainer() == 'container1'):?>
+                <?php echo $block->getChildChildHtml('options_container') ?>
+            <?php endif;?>
+        <?php endif; ?>
+
+        <?php if ($_product->isSaleable() && $block->hasOptions() && $block->getOptionsContainer() == 'container2'):?>
+            <?php echo $block->getChildChildHtml('options_container') ?>
+        <?php endif;?>
+        <?php echo $block->getChildHtml('form_bottom'); ?>
+    </form>
+</div>
+<script>
+    require([
+        'jquery',
+        'Magento_Catalog/js/price-box'
+    ], function($){
+        var priceBoxes = $('[data-role=priceBox]');
+
+        priceBoxes = priceBoxes.filter(function(index, elem){
+            return !$(elem).find('.price-from').length;
+        });
+
+        priceBoxes.priceBox({'priceConfig': <?php /* @escapeNotVerified */ echo $block->getJsonConfig() ?>});
+    });
+</script>

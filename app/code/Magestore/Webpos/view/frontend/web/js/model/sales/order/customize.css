@@ -1,0 +1,9 @@
+.wrap-status-orders ul li.selected.processed_cpc{
+    background: brown;
+}
+.wrap-status-orders ul li.processed_cpc:before{
+    background: brown;
+}
+.wrap-status-orders ul li.selected.processed_cpc:before{
+    background: #fff;
+}

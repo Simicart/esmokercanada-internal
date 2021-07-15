@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Cynoinfotech Team
+ * @package Cynoinfotech_ImagesAlt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	
+	<type name="Magento\Catalog\Block\Product\View\Gallery">
+        <plugin name="ci_imagealt" type="Cynoinfotech\ImagesAlt\Plugin\Product\View\Gallery" sortOrder="1" />
+	</type>
+	
+</config>

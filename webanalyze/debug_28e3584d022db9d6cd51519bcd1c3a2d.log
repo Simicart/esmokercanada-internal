@@ -1,0 +1,102 @@
+2021-05-24 23:27:54 Start Scan Process ver. 6.2 [scanner ver. 3.0]
+2021-05-24 23:27:54 Change Time limit: TRUE , Value: 7200
+2021-05-24 23:27:54 Current Memory limit: 256M
+2021-05-24 23:27:54 OS info: Linux (Linux magento.esmokercanada.com 3.10.0-1127.10.1.el7.x86_64 #1 SMP Wed Jun 3 14:28:03 UTC 2020 x86_64)
+2021-05-24 23:27:54 PHP ver: 7.0.33
+2021-05-24 23:27:54 SCAN_SQL: true
+2021-05-24 23:27:54 FULL_SCAN: false
+2021-05-24 23:27:54 Domain: https://www.esmokercanada.com
+2021-05-24 23:27:54 Scan path: /home/magento/public_html/
+2021-05-24 23:27:54 Session report key: 951f7cd834d3b9dd38d0c40c5a7c30ac
+2021-05-24 23:27:54 Report URL: https://www.siteguarding.com/antivirus/viewreport?report_id=951f7cd834d3b9dd38d0c40c5a7c30ac
+2021-05-24 23:27:54 TMP folder: /home/magento/public_html/webanalyze/
+2021-05-24 23:27:54 Detected CMS: other
+2021-05-24 23:27:54 SCAN_SQL: turned OFF [reason: unsupported CMS]
+2021-05-24 23:27:57 -----------------------------------------------------------------------
+2021-05-24 23:27:57 Collecting info about the files [METHOD 2]
+2021-05-24 23:27:57 Check for other websites
+2021-05-24 23:27:57 Excluded Folders: 0
+2021-05-24 23:27:58 Excluded ext: /home/magento/public_html//webanalyze/firewall/logs/index.php_002808a5e15d78c8e3ed76c9c14fe6b7.log.gzs
+2021-05-24 23:27:58 Excluded ext: /home/magento/public_html//webanalyze/firewall/logs/website.php_9ff81c61ad97053ad7e33f05bdddf0ba.log.gzs
+2021-05-24 23:27:58 Excluded ext: /home/magento/public_html//webanalyze/firewall/logs/backup_index.php_3a510bbaf767fd5f9dce2abee5c023e4.log.gzs
+2021-05-24 23:27:58 Excluded ext: /home/magento/public_html//webanalyze/firewall/logs/_adminer.php_9a02872a021a511c6ba6a7eeefe444d8.log.gzs
+2021-05-24 23:27:58 Excluded ext: /home/magento/public_html//webanalyze/firewall/logs/siteguarding_tools.php_d75359d4fdf4f7fbde41dc502cfc2c86.log.gzs
+2021-05-24 23:27:58 Excluded ext: /home/magento/public_html//webanalyze/firewall/logs/__tools____reinstaller.php_f86fcdc055463aa659f3bc93dcd35d88.log.gzs
+2021-05-24 23:27:58 Excluded ext: /home/magento/public_html//webanalyze/firewall/logs/info.php_4685cacd00252880f4ffac9b9952c0f9.log.gzs
+2021-05-24 23:27:58 Excluded ext: /home/magento/public_html//webanalyze/firewall/logs/firewall_log_analyze3.php_15bd01dc68eb8ae9524cd6e5a82e0790.log.gzs
+2021-05-24 23:27:58 Excluded ext: /home/magento/public_html//webanalyze/firewall/logs/mail.php_1ceb8b1e5984f4329d39041b721ad807.log.gzs
+2021-05-24 23:27:58 Excluded ext: /home/magento/public_html//webanalyze/firewall/logs/magento_clean_cache.php_ab149fc280a50406065b143dcfb99a84.log.gzs
+2021-05-24 23:27:58 Excluded ext: /home/magento/public_html//webanalyze/firewall/logs/tyt.php_efa21ef7d01e5e01a791ab3f02863d5e.log.gzs
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/win32/gifsicle.exe
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/win32/optipng.exe
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/win32/jpegoptim.exe
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/win32/jpegtran.exe
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/elf64/jpegoptim
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/elf64/optipng
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/elf64/jpegtran
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/elf64/gifsicle
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/win64/gifsicle.exe
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/win64/optipng.exe
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/win64/jpegoptim.exe
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/win64/jpegtran.exe
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/elf32/jpegoptim
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/elf32/optipng
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/elf32/jpegtran
+2021-05-24 23:27:58 Unwanted file: /app/code/Apptrian/ImageOptimizer/bin/elf32/gifsicle
+2021-05-24 23:27:59 Big file: /app/code/Magento/Swagger/view/frontend/web/swagger-ui/js/swagger-ui.js [2752878 bytes]
+2021-05-24 23:27:59 Unwanted file: /vendor/magento/zendframework1/library/Zend/Service/WindowsAzure/CommandLine/Scaffolders/DefaultScaffolder/resources/PhpOnAzure.Web/resources/WebPICmdLine/WebpiCmdLine.exe
+2021-05-24 23:27:59 Big file: /vendor/composer/composer/tests/Composer/Test/Autoload/Fixtures/classmap/LargeGap.php [1116753 bytes]
+2021-05-24 23:27:59 Big file: /vendor/composer/composer/tests/Composer/Test/Autoload/Fixtures/classmap/LargeClass.php [1116737 bytes]
+2021-05-24 23:27:59 Symbolic link: /home/magento/public_html//vendor/bin/pdepend
+2021-05-24 23:27:59 Symbolic link: /home/magento/public_html//vendor/bin/jsonlint
+2021-05-24 23:27:59 Symbolic link: /home/magento/public_html//vendor/bin/phpcpd
+2021-05-24 23:27:59 Symbolic link: /home/magento/public_html//vendor/bin/phpcs
+2021-05-24 23:27:59 Symbolic link: /home/magento/public_html//vendor/bin/phpmd
+2021-05-24 23:27:59 Symbolic link: /home/magento/public_html//vendor/bin/phpunit
+2021-05-24 23:27:59 Symbolic link: /home/magento/public_html//vendor/bin/composer
+2021-05-24 23:27:59 Symbolic link: /home/magento/public_html//vendor/bin/static-review.php
+2021-05-24 23:27:59 Symbolic link: /home/magento/public_html//vendor/bin/validate-json
+2021-05-24 23:27:59 Symbolic link: /home/magento/public_html//vendor/bin/php-cs-fixer
+2021-05-24 23:27:59 Symbolic link: /home/magento/public_html//vendor/bin/lessc
+2021-05-24 23:27:59 Unwanted file: /vendor/symfony/console/Symfony/Component/Console/Resources/bin/hiddeninput.exe
+2021-05-24 23:28:02 Big file: /pub/static/frontend/Magento/blank/en_US/js/bundle/bundle3.min.js [1046824 bytes]
+2021-05-24 23:28:02 Big file: /pub/static/frontend/Magento/blank/en_US/js/bundle/bundle2.min.js [1048556 bytes]
+2021-05-24 23:28:02 Big file: /pub/static/frontend/Magento/blank/en_US/js/bundle/bundle1.min.js [1048467 bytes]
+2021-05-24 23:28:02 Big file: /pub/static/frontend/Magento/luma/en_US/js/bundle/bundle3.min.js [1046824 bytes]
+2021-05-24 23:28:02 Big file: /pub/static/frontend/Magento/luma/en_US/js/bundle/bundle2.min.js [1048556 bytes]
+2021-05-24 23:28:02 Big file: /pub/static/frontend/Magento/luma/en_US/js/bundle/bundle1.min.js [1048467 bytes]
+2021-05-24 23:28:02 Big file: /pub/static/frontend/Smartwave/porto_rtl/en_US/js/bundle/bundle3.min.js [1048443 bytes]
+2021-05-24 23:28:02 Big file: /pub/static/frontend/Smartwave/porto_rtl/en_US/js/bundle/bundle2.min.js [1048545 bytes]
+2021-05-24 23:28:02 Big file: /pub/static/frontend/Smartwave/porto_rtl/en_US/js/bundle/bundle1.min.js [1048558 bytes]
+2021-05-24 23:28:02 Big file: /pub/static/frontend/Smartwave/porto/en_US/js/bundle/bundle3.min.js [1048444 bytes]
+2021-05-24 23:28:02 Big file: /pub/static/frontend/Smartwave/porto/en_US/js/bundle/bundle2.min.js [1048545 bytes]
+2021-05-24 23:28:02 Big file: /pub/static/frontend/Smartwave/porto/en_US/js/bundle/bundle1.min.js [1048564 bytes]
+2021-05-24 23:28:02 Big file: /pub/static/adminhtml/Magento/backend/en_US/js/bundle/bundle0.min.js [1048515 bytes]
+2021-05-24 23:28:02 Big file: /pub/static/adminhtml/Magento/backend/en_US/js/bundle/bundle2.min.js [1048455 bytes]
+2021-05-24 23:28:02 Big file: /pub/static/adminhtml/Magento/backend/en_US/js/bundle/bundle1.min.js [1048537 bytes]
+2021-05-24 23:28:02 Save collected file_list
+2021-05-24 23:28:02 Total files: 60431
+2021-05-24 23:28:02 -----------------------------------------------------------------------
+2021-05-24 23:28:02 Start - Pack with SSH
+2021-05-24 23:28:16 php disable_functions: 
+2021-05-24 23:28:16 Pack file: /home/magento/public_html/webanalyze/pack_28e3584d022db9d6cd51519bcd1c3a2d.tar
+2021-05-24 23:28:16 Pack file is 54.02Mb
+2021-05-24 23:28:16 -----------------------------------------------------------------------
+2021-05-24 23:28:16 Start - Send Packed files to SG server
+2021-05-24 23:28:16 Pack URL: /webanalyze/pack_28e3584d022db9d6cd51519bcd1c3a2d.tar
+2021-05-24 23:28:18 CURL info - Array
+(
+    [time_start] => 1621895296.1385
+    [time_process] => 2.0437650680542
+    [handler] => curl
+    [errors] => Array
+        (
+        )
+
+)
+
+2021-05-24 23:28:18 Pack file sent for analyze - OK
+2021-05-24 23:28:21 -----------------------------------------------------------------------
+2021-05-24 23:28:21 Start - Report generating
+2021-05-24 23:33:37 Done. Sending your report by email
+2021-05-24 23:33:37 Report Sent - OK

@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+    
+    	<tab id="mlx" translate="label" sortOrder="0">
+            <label>MLX-STORE</label>
+        </tab> 
+        
+        <section id="printshippinglabel" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+        
+            <label>Print Shipping Label</label>
+            <tab>mlx</tab>
+            <resource>Mlx_PrintShippingLabel2::printshippinglabel_configuration</resource> <!-- permission -->
+           
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Options</label>
+                <field id="font" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Font</label>
+                    <source_model>Mlx\PrintShippingLabel2\Model\Config\Source\Font</source_model>
+                </field>
+               
+               
+               <field id="other_font" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Other Font</label>   
+                    <comment>If you set value, it will auto replace default font. Please upload font path pub/Mlx/PrintShippingLabel/</comment>
+                    
+                    <depends>
+                        <field id="font">other</field>
+                    </depends> 
+                    
+                </field>
+                        
+                <field id="fontsize" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Font size</label>                    
+                    <comment>Input number only</comment>
+                </field>
+                
+                <field id="space" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Space Between Line</label>                    
+                    <comment>Input number only</comment>
+                </field>
+                
+                <field id="width" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Page size(Width)</label>                    
+                    <comment>Input number only</comment>
+                </field>                
+            </group>
+            
+            <group id="header" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Header</label>
+                
+                <field id="logo" translate="label comment" type="image" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo for PDF</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image\Pdf</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">sales/store/logo</upload_dir>
+                    <base_url type="media" scope_info="1">sales/store/logo</base_url>
+                    <comment>
+                        <![CDATA[Your default logo will be used in PDF and HTML documents.<br />(jpeg, tiff, png) If your pdf image is distorted, try to use larger file-size image.]]>
+                    </comment>
+                </field>
+                
+                <field id="logo_width" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Width</label>                    
+                </field>
+                
+                <field id="logo_height" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Height</label>
+                </field>
+                
+                
+                <field id="header_font" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Header Font</label>
+                    <source_model>Mlx\PrintShippingLabel2\Model\Config\Source\Font</source_model>
+                </field>
+                
+                <field id="other_font" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Other Font</label>   
+                    <comment>If you set value, it will auto replace default font. Please upload font path pub/Mlx/PrintShippingLabel/</comment>
+                    
+                    <depends>
+                        <field id="header_font">other</field>
+                    </depends> 
+                    
+                </field>
+                
+                <field id="fontsize" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Header Font size</label>                    
+                    <comment>Input number only</comment>
+                </field>
+                
+                <field id="header" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Company Name</label>
+                    <comment>Empty for skip.</comment>
+                </field>
+                
+                <field id="address" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Address 1</label>
+                    <comment>Empty for skip.</comment>
+                </field>
+                
+                <field id="city" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Address 2</label>
+                    <comment>Empty for skip.</comment>
+                </field>
+                
+                <field id="country" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Country</label>
+                    <comment>Empty for skip.</comment>
+                </field>
+                
+                <field id="phone" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Phone</label>
+                    <comment>Empty for skip.</comment>
+                </field>
+                
+                
+                
+            </group>
+            
+            <group id="format" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Format</label>
+                
+                
+                
+                <field id="order_id" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Add Order ID</label>
+                    <source_model>Mlx\PrintShippingLabel2\Model\Config\Source\Order</source_model>
+                </field>
+                
+                <field id="address" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Address</label>
+                </field>
+                
+            </group>
+           
+        </section>
+        
+    </system>
+</config>
+

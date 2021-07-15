@@ -1,0 +1,18 @@
+<?php if ($content = $block->getContent('any-cms-block-indetifier-to-be-displayed')) { ?>
+
+<div id="modal-overlay" style="display:none;">
+    <?php echo $content ?>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "modal_overlay": {
+                        "component": "Nuwaus_Popup/js/modal_overlay"
+                    }
+                 }
+            }
+        }
+    }
+</script><?php } ?>

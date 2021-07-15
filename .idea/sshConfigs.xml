@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="3.238.1.49" id="128e8dfa-4fd6-4aaa-a2e6-94ac698526da" keyPath="$USER_HOME$/Desktop/Private Key/esmoke.ppk" port="22" customName="dev" nameFormat="CUSTOM" username="magestore">
+        <option name="customName" value="dev" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>

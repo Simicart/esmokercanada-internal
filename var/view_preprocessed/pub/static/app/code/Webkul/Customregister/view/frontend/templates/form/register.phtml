@@ -1,0 +1,42 @@
+<?php /** * Create account form template * * @var $block \Webkul\Customregister\Block\Form\Register */ ?> <?php echo $block->getChildHtml('form_fields_before')?> <?php /* Extensions placeholder */ ?> <?php echo $block->getChildHtml('customer.form.register.extra')?> <form class="form create account form-create-account" action="<?php /* @escapeNotVerified */ echo $block->getPostActionUrl() ?>" method="post" id="form-validate" enctype="multipart/form-data" autocomplete="off"><fieldset class="fieldset create info"><legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Name') ?></span></legend><br> <input type="hidden" name="success_url" value="<?php /* @escapeNotVerified */ echo $block->getSuccessUrl() ?>"><input type="hidden" name="error_url" value="<?php /* @escapeNotVerified */ echo $block->getErrorUrl() ?>"><input type="hidden" name="wk_custom_register" value="1"><?php echo $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Name')->setObject($block->getFormData())->setForceUseCustomerAttributes(true)->toHtml() ?> <?php $_dob = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Dob') ?> <?php $_taxvat = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Taxvat') ?> <?php $_gender = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Gender') ?></fieldset><fieldset class="fieldset create account" data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"><legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Sign-in Information') ?></span></legend><br> <div class="field required"><label for="email_address" class="label"><span><?php /* @escapeNotVerified */ echo __('Email') ?></span></label> <div class="control"><input type="email" name="email" autocomplete="email" id="email_address" value="<?php echo $block->escapeHtml($block->getFormData()->getEmail()) ?>" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" class="input-text" data-validate="{required:true, 'validate-email':true}"></div></div><div class="field password required" data-mage-init='{"passwordStrengthIndicator": {}}'><label for="password" class="label"><span><?php /* @escapeNotVerified */ echo __('Password') ?></span></label> <div class="control"><input type="password" name="password" id="password" title="<?php /* @escapeNotVerified */ echo __('Password') ?>" class="input-text" data-password-min-length="<?php echo $block->escapeHtml($block->getMinimumPasswordLength()) ?>" data-password-min-character-sets="<?php echo $block->escapeHtml($block->getRequiredCharacterClassesNumber()) ?>" data-validate="{required:true, 'validate-customer-password':true}" autocomplete="off"><div id="password-strength-meter-container" data-role="password-strength-meter" ><div id="password-strength-meter" class="password-strength-meter"><?php /* @escapeNotVerified */ echo __('Password Strength'); ?>: <span id="password-strength-meter-label" data-role="password-strength-meter-label" ><?php /* @escapeNotVerified */ echo __('No Password'); ?></span></div></div></div></div><?php echo $block->getChildHtml('form_additional_info'); ?></fieldset><fieldset class="fieldset additional info"><legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Phone Number and Postal Code') ?></span></legend><br> <input type="hidden" name="success_url" value="<?php /* @escapeNotVerified */ echo $block->getSuccessUrl() ?>"><input type="hidden" name="error_url" value="<?php /* @escapeNotVerified */ echo $block->getErrorUrl() ?>"><div class="field wk_zip required"><label for="wk_zip" class="label"><span><?php /* @escapeNotVerified */ echo __('Zip/Postal Code') ?></span></label> <div class="control"><input type="text" name="wk_postcode" id="wk_zip" title="<?php /* @escapeNotVerified */ echo __('Zip/Postal Code') ?>" class="input-text validate-zip-international <?php /* @escapeNotVerified */ echo $this->helper('Magento\Customer\Helper\Address')->getAttributeValidationClass('postcode') ?>" data-validate="{required:true}"></div></div><div class="field telephone required"><label class="label" for="telephone"><span><?php /* @escapeNotVerified */ echo __('Phone Number <strong><span style="color:#FF0000;">No Spaces - ( )</span></strong>') ?></span></label> <div class="control"><input type="text" name="wk_telephone" value="" title="Phone Number" class="input-text required-entry validate-digits " id="telephone" aria-required="true" data-validate="{required:true,number:true,rangelength: [10, 12]}"></div></div><div class="actions-toolbar"><div class="primary"><button type="submit" class="action submit primary" title="<?php /* @escapeNotVerified */ echo __('Create Account') ?>"><span><?php /* @escapeNotVerified */ echo __('Create Account') ?></span></button></div><div class="secondary"><a class="action back" href="<?php echo $block->escapeUrl($block->getBackUrl()) ?>"><span><?php /* @escapeNotVerified */ echo __('Back') ?></span></a></div></div></fieldset></form><script>
+require([
+    'jquery',
+    'mage/mage'
+], function($){
+
+    var dataForm = $('#form-validate');
+    var ignore = <?php /* @escapeNotVerified */ echo $_dob->isEnabled() ? '\'input[id$="full"]\'' : 'null'; ?>;
+
+    dataForm.mage('validation', {
+    <?php if ($_dob->isEnabled()): ?>
+        errorPlacement: function(error, element) {
+            if (element.prop('id').search('full') !== -1) {
+                var dobElement = $(element).parents('.customer-dob'),
+                    errorClass = error.prop('class');
+                error.insertAfter(element.parent());
+                dobElement.find('.validate-custom').addClass(errorClass)
+                    .after('<div class="' + errorClass + '"></div>');
+            }
+            else {
+                error.insertAfter(element);
+            }
+        },
+        ignore: ':hidden:not(' + ignore + ')'
+    <?php else: ?>
+        ignore: ignore ? ':hidden:not(' + ignore + ')' : ':hidden'
+    <?php endif ?> }).find('input:text').attr('autocomplete', 'off');
+
+});</script><?php if ($block->getShowAddressFields()): ?> <script type="text/x-magento-init">
+    {
+        "#country": {
+            "regionUpdater": {
+                "optionalRegionAllowed": <?php /* @escapeNotVerified */ echo($block->getConfig('general/region/display_all') ? 'true' : 'false'); ?>,
+                "regionListId": "#region_id",
+                "regionInputId": "#region",
+                "postcodeId": "#zip",
+                "form": "#form-validate",
+                "regionJson": <?php /* @escapeNotVerified */ echo $this->helper('Magento\Directory\Helper\Data')->getRegionJson() ?>,
+                "defaultRegion": "<?php /* @escapeNotVerified */ echo $block->getFormData()->getRegionId() ?>",
+                "countriesWithOptionalZip": <?php /* @escapeNotVerified */ echo $this->helper('Magento\Directory\Helper\Data')->getCountriesWithOptionalZip(true) ?> }
+        }
+    }</script><?php endif; ?>

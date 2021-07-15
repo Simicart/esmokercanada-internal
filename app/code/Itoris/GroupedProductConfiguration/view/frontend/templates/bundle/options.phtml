@@ -1,0 +1,164 @@
+<?php
+/**
+ * ITORIS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the ITORIS's Magento Extensions License Agreement
+ * which is available through the world-wide-web at this URL:
+ * http://www.itoris.com/magento-extensions-license.html
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to sales@itoris.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extensions to newer
+ * versions in the future. If you wish to customize the extension for your
+ * needs please refer to the license agreement or contact sales@itoris.com for more information.
+ *
+ * @category   ITORIS
+ * @package    ITORIS_M2_Itoris_GroupedProductConfiguration
+ * @copyright  Copyright (c) 2016 ITORIS INC. (http://www.itoris.com)
+ * @license    http://www.itoris.com/magento-extensions-license.html  Commercial License
+ */
+
+?>
+<?php /** @var $block Magento\Bundle\Block\Catalog\Product\View\Type\Bundle */ ?>
+<?php
+$helperFormated=$this->helper('Magento\Checkout\Helper\Data');
+$_product = $block->getProduct();
+ $priceOption = $_product->getPriceInfo()->getPrice('bundle_option')->getValue();
+ $finalPrice = $_product->getPriceInfo()->getPrice('final_price')->getValue();
+$_product->getPriceInfo()->getPrice('final_price');
+ $resultPrice=$finalPrice - $priceOption;
+/** @var \Magento\Framework\View\Layout $layout */
+$layout = $block->getLayout();
+$priceCustom=$layout->getBlock('product.price.render.bundle.customization');
+$helper = $this->helper('Magento\Catalog\Helper\Output');
+$helperEm=$this->helper('Itoris\GroupedProductConfiguration\Helper\ExtensionConfig');
+$bundle = $block->getLayout()->createBlock('Itoris\GroupedProductConfiguration\Block\Frontend\Bundle','itoris_bundle_block_option_'.$_product->getId());
+$bundle->setProduct($_product);
+    $typeBlock['select']=$select=$helperEm->factory('Itoris\GroupedProductConfiguration\Block\Frontend\Option\Select')->setTemplate('Itoris_GroupedProductConfiguration::bundle/option/select.phtml')
+        ->setId('itoris_select');
+    $typeBlock['radio']=$helperEm->factory('Itoris\GroupedProductConfiguration\Block\Frontend\Option\Radio')->setTemplate('Itoris_GroupedProductConfiguration::bundle/option/radio.phtml')
+        ->setId('itoris_radio');
+    $typeBlock['checkbox']=$helperEm->factory('Itoris\GroupedProductConfiguration\Block\Frontend\Option\Checkbox')->setTemplate('Itoris_GroupedProductConfiguration::bundle/option/checkbox.phtml')
+        ->setId('itoris_checkbox');
+    $typeBlock['multi']=$helperEm->factory('Itoris\GroupedProductConfiguration\Block\Frontend\Option\Multi')->setTemplate('Itoris_GroupedProductConfiguration::bundle/option/multi.phtml')
+        ->setId('itoris_multi');
+$typeBlock['default']=$helperEm->factory('Magento\Catalog\Block\Product\View\Options\Type\DefaultType')->setTemplate('Magento_Catalog::product/view/options/type/default.phtml')
+    ->setId('itoris_multi');
+    //$blockPrice=$helperEm->factory('Magento\Bundle\Pricing\Render\FinalPriceBox');
+    $priceHelper = $this->helper('Magento\Checkout\Helper\Data');
+    $bundle->setProductBundle($_product);
+
+//$priceRender = $helperEm->factory('Itoris\GroupedProductConfiguration\Block\Frontend\Render',['data'=>['price_render'=>'product.price.render.default','price_type_code'=>'configured_price','zone'=>'item_view']]);
+?>
+<?php $layout = $block->getLayout(); ?>
+<?php $childName=$layout->getChildName('itoris.grouped.product.info.options','date'); ?>
+<?php
+
+if($childName) {
+    $child = $layout->getBlock($childName);
+    if ($child) {
+        $child->setTemplate('Itoris_GroupedProductConfiguration::date.phtml');
+    }
+}
+?>
+<?php $childName=$layout->getChildName('itoris.grouped.product.info.options','file'); ?>
+
+<?php
+
+if($childName) {
+    $child = $layout->getBlock($childName);
+    if ($child) {
+        $child->setTemplate('Itoris_GroupedProductConfiguration::file.phtml');
+    }
+}
+?>
+<script>
+    bundleConfig[<?php echo $_product->getId(); ?>] = <?php  echo $bundle->getJsonConfig(); ?>;
+    priceBundle[<?php echo $_product->getId(); ?>]=<?php echo $priceOption; ?>
+</script>
+<?php $options = $bundle->decorateArray($bundle->getOptions()); ?>
+<?php if ($_product->isSaleable()):?>
+    <?php if (count($options)): ?>
+        <script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "priceBundleCustom": {
+                "optionConfig": <?php /* @escapeNotVerified */ echo $bundle->getJsonConfig()?>,
+                "controlContainer": ".field.option"
+            }
+        }
+    }
+</script>
+        <fieldset class="fieldset fieldset-bundle-options">
+            <legend id="customizeTitle" class="legend title">
+                <span><?php /* @escapeNotVerified */ echo $block->escapeHtml(__('Customize %1', $helper->productAttribute($_product, $_product->getName(), 'name'))) ?></span>
+            </legend><br />
+            <?php echo $bundle->getChildHtml('product_info_bundle_options_top');?>
+            <?php foreach ($options as $option): ?>
+                <?php if (!$option->getSelections()): ?>
+                    <?php continue; ?>
+                <?php endif; ?>
+                <?php echo $bundle->setBlockType($typeBlock[$option->getType()])->getOptionHtml($option) ?>
+            <?php endforeach; ?>
+        </fieldset>
+    <?php else: ?>
+        <p class="empty"><?php /* @escapeNotVerified */ echo $block->escapeHtml(__('No options of this product are available.')) ?></p>
+    <?php endif; ?>
+<?php endif;?>
+<?php $bundle->unregisterBundle(); ?>
+<?php $_options = $block->decorateArray($block->getOptions()) ?>
+<?php $productId = $block->getProduct()->getId(); ?>
+<?php if (count($_options)):?>
+    <script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "priceOptionsCustom": {
+                "productId": <?php echo $productId ?>,
+                "optionConfig": <?php /* @escapeNotVerified */ echo $block->getJsonConfig()?>,
+                "controlContainer": ".field",
+                "priceHolderSelector": "[data-product-id='<?php echo $productId ?>'][data-role=priceBox]"
+            }
+        }
+    }
+
+</script>
+        <?php foreach($_options as $_option): ?>
+            <?php echo $block->getOptionHtml($_option) ?>
+        <?php endforeach; ?>
+
+<?php endif; ?>
+
+<script type="text/javascript">
+
+    requirejs([
+        'jquery',
+    ], function ($) {
+        $(function(){
+                $('.itoris-control-qty_<?php echo $_product->getId(); ?>').on('change paste keyup',function(){
+                if($(this).find('.custom_group_product_chexhbox').length>0){
+                    if($(this).find('.qty').val()<1){
+                        $(this).find('.qty').val(1);
+                        $(this).parent().parent().children().first().find('.itoris_slider_group').show(500);
+                    }else {
+                        $(this).find('.qty').val(0);
+                        $(this).parent().parent().children().first().find('.itoris_slider_group').hide(500);
+                    }
+                }else {
+                    if ($(this).find('.qty').val() > 0 && $(this).find('.qty').val() != "") {
+                        $(this).parent().parent().children().first().find('.itoris_slider_group').show(500);
+                    }
+                    else {
+                        $(this).parent().parent().children().first().find('.itoris_slider_group').hide(500);
+                    }
+                }
+            });
+
+        })
+
+    });
+</script>

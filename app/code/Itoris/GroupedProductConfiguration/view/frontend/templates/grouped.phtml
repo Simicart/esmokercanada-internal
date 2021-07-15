@@ -1,0 +1,454 @@
+
+<?php
+/**
+ * ITORIS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the ITORIS's Magento Extensions License Agreement
+ * which is available through the world-wide-web at this URL:
+ * http://www.itoris.com/magento-extensions-license.html
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to sales@itoris.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extensions to newer
+ * versions in the future. If you wish to customize the extension for your
+ * needs please refer to the license agreement or contact sales@itoris.com for more information.
+ *
+ * @category   ITORIS
+ * @package    ITORIS_M2_Itoris_GroupedProductConfiguration
+ * @copyright  Copyright (c) 2016 ITORIS INC. (http://www.itoris.com)
+ * @license    http://www.itoris.com/magento-extensions-license.html  Commercial License
+ */
+?>
+<script>
+    var globalOptionsProd={};
+    var productId;
+    var spConfig=[];
+    var optionsCustom=[];
+    var itorisHandleGrouped ='grouped_handle_product';
+    var bundleProduct=[];
+    var configurableProduct=[];
+    var incrementConf=1;
+    var priceBundle=[];
+    var optionHandlers=[];
+    var boolCustomDate=false;
+</script>
+<?php
+$helper = $this->helper('Itoris\GroupedProductConfiguration\Helper\ExtensionConfig');
+$helperVersion=$this->helper('Itoris\GroupedProductConfiguration\Helper\MagentoVersion');
+$vers = $helperVersion->getMagentoVersion();
+?>
+<?php $block->setPreconfiguredValue(); ?>
+<?php $_product = $block->getProduct(); ?>
+<?php
+    $helperSettings=$this->helper('Itoris\GroupedProductConfiguration\Helper\HelperSettings');
+    $helperSettings->settingsInit($_product->getId());
+?>
+<?php $_associatedProducts = $block->getAssociatedProducts(); ?>
+<?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>
+<script>
+    var bundleConfig=[];
+    var countProd = <?php echo $_hasAssociatedProducts = count($_associatedProducts); ?>;
+    var incrementProd=0;
+    var globalOptionsProd=[];
+</script>
+<?php $layout=$block->getLayout(); ?>
+<div class="table-wrapper grouped">
+    <table class="table data grouped" id="super-product-table">
+        <caption class="table-caption"><?php /* @escapeNotVerified */ echo $block->escapeHtml(__('Grouped product items')) ?></caption>
+        <thead>
+        <tr>
+            <th class="col item" scope="col"><?php /* @escapeNotVerified */ echo $block->escapeHtml(__('Product Name')) ?></th>
+            <?php if($helperSettings->getSettings('show_checkbox')==0): ?>
+            <?php if ($_product->isSaleable()): ?>
+                <th class="col qty" scope="col"><?php /* @escapeNotVerified */ echo $block->escapeHtml(__('Qty')) ?></th>
+            <?php endif; ?>
+            <?php endif; ?>
+            <?php if($helperSettings->getSettings('show_checkbox')==1): ?>
+                <?php if ($_product->isSaleable()): ?>
+                    <th class="col qty" scope="col"><?php /* @escapeNotVerified */ echo $block->escapeHtml(__('Add')) ?></th>
+                <?php endif; ?>
+            <?php endif; ?>
+
+        </tr>
+        </thead>
+
+        <?php if ($_hasAssociatedProducts): ?>
+            <?php foreach ($_associatedProducts as $_item): ?>
+                <?php $prod = $helper->factory('Magento\Catalog\Model\Product')->load($_item->getId()); ?>
+                <tbody>
+                <tr>
+                    <td data-th="<?php echo $block->escapeHtml(__('Product Name')); ?>" class="col item">
+                        <?php $_Imagehelper = $this->helper('Magento\Catalog\Helper\Image'); ?>
+                        <?php if(($helperSettings->getSettings('clickable')==1 || $helperSettings->getSettings('clickable')==NULL) && ($helperSettings->getSettings('show_image')==1 ||  $helperSettings->getSettings('show_image')==NULL)  && ($_item->isVisibleInCatalog() && $_item->isVisibleInSiteVisibility())): ?>
+                            <a class="grouped-itoris-image" href="<?php echo $_item->getProductUrl($_item); ?>"> <img alt="<?php echo $_item->getName() ?>" src="<?php echo $_Imagehelper->init($_item, 'product_small_image')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->getUrl(); ?>" /></a>
+                        <?php endif; ?>
+                        <?php ?>
+                        <?php if((($helperSettings->getSettings('clickable')==0 && $helperSettings->getSettings('clickable')!=1 && $helperSettings->getSettings('clickable')!=NULL) && ($helperSettings->getSettings('show_image')==1 || $helperSettings->getSettings('show_image')==NULL )) || (((!($_item->isVisibleInCatalog() && $_item->isVisibleInSiteVisibility()))) && ($helperSettings->getSettings('show_image') || $helperSettings->getSettings('show_image')==NULL))): ?>
+                          <img style=" float: left; margin: 0px 5px 5px 0px;" class="grouped-itoris-image"  alt="<?php echo $_item->getName() ?>" src="<?php echo $_Imagehelper->init($_item, 'product_small_image')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->getUrl(); ?>" />
+                        <?php endif; ?>
+                        <?php if( ($helperSettings->getSettings('clickable') || $helperSettings->getSettings('clickable')==NULL) && $_item->isVisibleInCatalog() && $_item->isVisibleInSiteVisibility() && $_item->getTypeId()!='bundle'): ?>
+                            <a class="grouped-itoris-name" style="display: inherit" href="<?php echo $_item->getProductUrl($_item); ?>"> <strong class="product-item-name"><?php echo $block->escapeHtml($_item->getName()) ?></strong></a>
+                        <?php endif; ?>
+                        <?php if((!($helperSettings->getSettings('clickable') || $helperSettings->getSettings('clickable')==NULL) && $_item->getTypeId()!='bundle') ||  !($_item->isVisibleInCatalog() && $_item->isVisibleInSiteVisibility()) && $_item->getTypeId()!='bundle'): ?>
+                        <strong  style="display: inherit "  class="product-item-name"><?php echo $block->escapeHtml($_item->getName()) ?></strong>
+                            <?php endif; ?>
+                            <?php if ($block->getCanShowProductPrice($_product) && $_item->getTypeId()!='bundle'): ?>
+                                <?php if ($block->getCanShowProductPrice($_item)): ?>
+                                    <?php /* @escapeNotVerified */ echo $block->getProductPrice($_item) ?>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <?php if ($block->getCanShowProductPrice($_product) && $_item->getTypeId()=='bundle'): ?>
+                                <?php if ($block->getCanShowProductPrice($_item)): ?>
+                                    <?php
+                                    $blockCustom =$layout->getBlock('itoris.product.price.render.bundle.customization');
+                                    $blockCustom->productBundle=$_item;
+                                    $blockSummary=$layout->getBlock('itoris.summary');
+                                    $blockSummary->helperSettings=$helperSettings;
+                                    $blockSummary->productBundle=$_item;
+                                    $blockSummary->setTemplate('Itoris_GroupedProductConfiguration::bundle/summary.phtml');
+                                    echo  $blockSummary->toHtml();
+                                    ?>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <?php if ((int)$helperSettings->getSettings('show_description')) { ?>
+                            <div class="grouped-itoris-description">
+                                <?php echo $_item->getShortDescription() ?>
+                            </div>
+                            <?php } ?>
+                           <div style="clear: both"></div>
+                            <?php if($vers>2.07): ?>
+                                <?php if($_item->getQty() * 1<1): ?>
+                                <?php if($_item->getTypeId()!='configurable' && $_item->getTypeId()!='bundle' && $_item->getTypeId()!='downloadable'): ?>
+                                    <div  hidden class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                        <?php
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::options.phtml');
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                        echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                        ?></div>
+                                <?php endif; ?>
+                                <?php if($_item->getTypeId()=='downloadable'): ?>
+                                    <div  hidden class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                        <?php
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::downloadable/options.phtml');
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                        echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                        ?></div>
+                                <?php endif; ?>
+                                <?php if($_item->getTypeId()=='configurable'): ?>
+                                    <div  hidden class="itoris_slider_group" id="configurable_product_id_<?php echo $_item->getId(); ?>" data_product_id="<?php echo $_item->getId(); ?>">
+                                        <?php
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::configurable/options.phtml')->toHtml();
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                        echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                        ?>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if($_item->getTypeId()=='bundle'): ?>
+                                    <div  hidden class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                        <?php
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::bundle/options.phtml');
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                        echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                        ?></div>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                                <?php if($_item->getQty() * 1>0 && $helperSettings->getSettings('show_checkbox')==1): ?>
+                                    <?php if($_item->getTypeId()!='configurable' && $_item->getTypeId()!='bundle' && $_item->getTypeId()!='downloadable'): ?>
+                                        <div  class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::options.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?></div>
+                                    <?php endif; ?>
+                                    <?php if($_item->getTypeId()=='downloadable'): ?>
+                                        <div  class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::downloadable/options.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?></div>
+                                    <?php endif; ?>
+                                    <?php if($_item->getTypeId()=='configurable'): ?>
+                                        <div  class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::configurable/options.phtml')->toHtml();
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if($_item->getTypeId()=='bundle'): ?>
+                                        <div  hidden class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::bundle/options.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?></div>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                                <?php if($_item->getQty() * 1>0 && $helperSettings->getSettings('show_checkbox')!=1): ?>
+                                    <?php if($_item->getTypeId()!='configurable' && $_item->getTypeId()!='bundle' && $_item->getTypeId()!='downloadable'): ?>
+                                        <div   class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::options.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?></div>
+                                    <?php endif; ?>
+                                    <?php if($_item->getTypeId()=='downloadable'): ?>
+                                        <div  class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::downloadable/options.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?></div>
+                                    <?php endif; ?>
+                                    <?php if($_item->getTypeId()=='configurable'): ?>
+                                        <div   class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::configurable/options.phtml')->toHtml();
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if($_item->getTypeId()=='bundle'): ?>
+                                        <div   class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::bundle/options.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?></div>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <?php if($vers<2.07): ?>
+                                <?php if($_item->getQty() * 1<1):?>
+                                <?php if($_item->getTypeId()!='configurable' && $_item->getTypeId()!='bundle' && $_item->getTypeId()!='downloadable'): ?>
+                                    <div  hidden class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                        <?php
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($_item)->setTemplate('Itoris_GroupedProductConfiguration::options.phtml');
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($_item);
+                                        echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                        ?></div>
+                                <?php endif; ?>
+                                <?php if($_item->getTypeId()=='downloadable'): ?>
+                                    <div  hidden class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                        <?php
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::downloadable/options.phtml');
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                        echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                        ?></div>
+                                <?php endif; ?>
+                                <?php if($_item->getTypeId()=='configurable'): ?>
+                                    <div  hidden class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                        <?php
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($_item)->setTemplate('Itoris_GroupedProductConfiguration::configurable/options.phtml')->toHtml();
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($_item);
+                                        echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                        ?>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if($_item->getTypeId()=='bundle'): ?>
+                                    <div  hidden class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                        <?php
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($_item)->setTemplate('Itoris_GroupedProductConfiguration::bundle/options.phtml');
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                        $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($_item);
+                                        echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                        ?></div>
+                                <?php endif; ?>
+                                    <?php endif; ?>
+                                <?php if($_item->getQty() * 1>0 &&  $helperSettings->getSettings('show_checkbox')==1):?>
+                                    <?php if($_item->getTypeId()!='configurable' && $_item->getTypeId()!='bundle' && $_item->getTypeId()!='downloadable'): ?>
+                                        <div  hidden class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($_item)->setTemplate('Itoris_GroupedProductConfiguration::options.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($_item);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?></div>
+                                    <?php endif; ?>
+                                    <?php if($_item->getTypeId()=='downloadable'): ?>
+                                        <div  hidden class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::downloadable/options.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?></div>
+                                    <?php endif; ?>
+                                    <?php if($_item->getTypeId()=='configurable'): ?>
+                                        <div  hidden class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($_item)->setTemplate('Itoris_GroupedProductConfiguration::configurable/options.phtml')->toHtml();
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($_item);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if($_item->getTypeId()=='bundle'): ?>
+                                        <div  hidden class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($_item)->setTemplate('Itoris_GroupedProductConfiguration::bundle/options.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($_item);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?></div>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                                <?php if($_item->getQty() * 1>0 && $helperSettings->getSettings('show_checkbox')!=1):?>
+                                    <?php if($_item->getTypeId()!='configurable' && $_item->getTypeId()!='bundle' && $_item->getTypeId()!='downloadable'): ?>
+                                        <div   class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($_item)->setTemplate('Itoris_GroupedProductConfiguration::options.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($_item);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?></div>
+                                    <?php endif; ?>
+                                    <?php if($_item->getTypeId()=='downloadable'): ?>
+                                        <div  class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($prod)->setTemplate('Itoris_GroupedProductConfiguration::downloadable/options.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($prod);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?></div>
+                                    <?php endif; ?>
+                                    <?php if($_item->getTypeId()=='configurable'): ?>
+                                        <div   class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($_item)->setTemplate('Itoris_GroupedProductConfiguration::configurable/options.phtml')->toHtml();
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($_item);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if($_item->getTypeId()=='bundle'): ?>
+                                        <div   class="itoris_slider_group" data_product_id="<?php echo $_item->getId(); ?>">
+                                            <?php
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options')->setProduct($_item)->setTemplate('Itoris_GroupedProductConfiguration::bundle/options.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setTemplate('Itoris_GroupedProductConfiguration::wrapper.phtml');
+                                            $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->setProductOption($_item);
+                                            echo $block->getLayout()->getBlock('itoris.grouped.product.info.options.wrapper')->toHtml();
+                                            ?></div>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            </a>
+                    </td>
+                    <?php if ($_product->isSaleable()): ?>
+                        <td data-th="<?php echo $block->escapeHtml(__('Qty')); ?>" class="col qty">
+                            <?php if ($_item->isSaleable()) : ?>
+                            <?php if($_item->getTypeId()!='configurable'): ?>
+                            <div class="control qty itoris-control-qty_<?php echo $_item->getId(); ?>" >
+                                <?php endif; ?>
+                                <?php if($_item->getTypeId()=='configurable'): ?>
+                                <div class="control qty itoris-control-qty-configurable_<?php echo $_item->getId(); ?>" >
+                                    <?php endif; ?>
+                                    <?php if($helperSettings->getSettings('show_checkbox')==0): ?>
+                                        <input type="number"  name="super_group[<?php /* @escapeNotVerified */ echo $_item->getId() ?>]"
+                                               id="options-<?php echo $_item->getId(); ?>"
+                                               maxlength="12"
+                                               value="<?php /* @escapeNotVerified */ echo $_item->getQty() * 1; ?>"
+                                               title="<?php /* @escapeNotVerified */ echo $block->escapeHtml(__('Qty')) ?>"
+                                               class="input-text qty "
+                                               min="0"
+                                               data-validate="{'validate-grouped-qty':'#super-product-table'}"
+                                               data-errors-message-box="#validation-message-box"/>
+                                    <?php endif; ?>
+                                    <?php if($helperSettings->getSettings('show_checkbox')==1): ?>
+                                        <input type="checkbox"  name="super_group[<?php /* @escapeNotVerified */ echo $_item->getId() ?>]"
+                                               id="options_<?php echo $_item->getId(); ?>_ckecbox"
+                                               value="<?php echo $_item->getQty() * 1; ?>"
+                                               <?php echo $_item->getQty() * 1 > 0 ? 'checked="checked"' : ''; ?>
+                                               title="<?php /* @escapeNotVerified */ echo $block->escapeHtml(__('Add')) ?>"
+                                               class="input-text qty  custom_group_product_chexhbox"
+                                               data-validate="{'validate-grouped-qty':'#super-product-table'}"
+                                               data-errors-message-box="#validation-message-box"/>
+                                    <?php endif; ?>
+
+                                </div>
+                                <?php else: ?>
+                                    <div class="stock unavailable" title="<?php /* @escapeNotVerified */ echo $block->escapeHtml(__('Availability')) ?>">
+                                        <span><?php /* @escapeNotVerified */ echo $block->escapeHtml(__('Out of stock')) ?></span>
+                                    </div>
+                                <?php endif; ?>
+                        </td>
+                    <?php endif; ?>
+                </tr>
+                <?php if ($block->getCanShowProductPrice($_product)
+                    && $block->getCanShowProductPrice($_item)
+                    && trim($block->getProductPriceHtml(
+                        $_item,
+                        \Magento\Catalog\Pricing\Price\TierPrice::PRICE_CODE
+                    ))): ?>
+                    <tr class="row-tier-price">
+                        <td colspan="2">
+                            <?php echo $block->getProductPriceHtml(
+                                $_item,
+                                \Magento\Catalog\Pricing\Price\TierPrice::PRICE_CODE
+                            ) ?>
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                </tbody>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tbody>
+            <tr>
+                <td class="unavailable"
+                    colspan="<?php if ($_product->isSaleable()): ?>4<?php else : ?>3<?php endif; ?>">
+                    <?php /* @escapeNotVerified */ echo $block->escapeHtml(__('No options of this product are available.')) ?>
+                </td>
+            </tr>
+            </tbody>
+        <?php endif; ?>
+    </table>
+</div>
+<div id="validation-message-box"></div>
+<script type="text/javascript">
+    requirejs([
+        'jquery',
+    ], function ($) {
+        $(function(){
+            $('.itoris-control-qty').on('change paste keyup',function(){
+                if($(this).find('.qty').val()!=0 && $(this).find('.qty').val()!="") {
+                    $(this).parent().parent().children().first().find('.itoris_slider_group').show(500);
+                }
+                else {
+                    $(this).parent().parent().children().first().find('.itoris_slider_group').hide(500);
+                }
+            })
+        })
+
+    });
+</script>
+<style>
+    .grouped-itoris-description {display:inline; font-size:12px; color:#555;}
+    .grouped-itoris-image {float:left; margin: 0 20px 5px 0;}
+</style>

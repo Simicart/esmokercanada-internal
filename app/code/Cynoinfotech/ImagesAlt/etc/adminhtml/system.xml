@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author Cynoinfotech Team
+ * @package Cynoinfotech_ImagesAlt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+       <tab id="cynoinfotech" translate="label" sortOrder="300">
+            <label>CynoInfotech</label>
+        </tab>		
+		<section id="cynoinfotech_imagesalt" translate="label" type="text" sortOrder="115" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>SEO Product Images ALT Tag</label>
+            <tab>cynoinfotech</tab> 
+			
+			<resource>Cynoinfotech_ImagesAlt::Config_ImagesAlt</resource>
+			
+			<group id='general' translate='label' sortOrder='1' showInDefault='1' showInWebsite='1' showInStore='1'>
+				<label>General Configuration</label>
+				
+				<field id='enable' translate='label' type='select' sortOrder='1' showInDefault='1' showInWebsite='1' showInStore='1'>
+					<label>Enable</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				
+				<field id="imagealt_structure" translate="label" type="textarea" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Alt Tag Structure</label>
+						<comment><![CDATA[<p>Default Tags which you used</p>
+							<ul><li>For add Product Name used - {product_name}  </li>
+							<li>For add Product SKU used - {product_sku}  </li>
+							<li>For add Product Category Name used - {category_name}  </li>
+							<li>For add Product Price used - {product_price}  </li>
+							<li>For add Auto increment number used - {auto_increment_number}  </li></ul>]]></comment>
+				</field>
+				
+			</group>			
+		</section>
+	</system>
+</config>

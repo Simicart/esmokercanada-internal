@@ -1,0 +1,100 @@
+<?php
+/**
+ * ITORIS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the ITORIS's Magento Extensions License Agreement
+ * which is available through the world-wide-web at this URL:
+ * http://www.itoris.com/magento-extensions-license.html
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to sales@itoris.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extensions to newer
+ * versions in the future. If you wish to customize the extension for your
+ * needs please refer to the license agreement or contact sales@itoris.com for more information.
+ *
+ * @category   ITORIS
+ * @package    ITORIS_M2_Itoris_GroupedProductConfiguration
+ * @copyright  Copyright (c) 2016 ITORIS INC. (http://www.itoris.com)
+ * @license    http://www.itoris.com/magento-extensions-license.html  Commercial License
+ */
+
+
+?>
+<?php  /* @var $block Mage_Catalog_Block_Product_View_Options*/ ?>
+<?php $_options = $block->decorateArray($block->getOptions()) ?>
+<?php $productId = $block->getProduct()->getId(); ?>
+<?php $layout = $block->getLayout(); ?>
+<?php $childName=$layout->getChildName('itoris.grouped.product.info.options','date'); ?>
+<?php
+
+if($childName) {
+    $child = $layout->getBlock($childName);
+    if ($child) {
+        $child->setTemplate('Itoris_GroupedProductConfiguration::date.phtml');
+    }
+}
+?>
+<?php $childName=$layout->getChildName('itoris.grouped.product.info.options','file'); ?>
+
+<?php
+
+if($childName) {
+    $child = $layout->getBlock($childName);
+    if ($child) {
+        $child->setTemplate('Itoris_GroupedProductConfiguration::file.phtml');
+    }
+}
+?>
+<?php if (count($_options)):?>
+    <script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "priceOptionsCustom": {
+                "productId": <?php echo $productId ?>,
+                "optionConfig": <?php /* @escapeNotVerified */ echo $block->getJsonConfig()?>,
+                "controlContainer": ".field",
+                "priceHolderSelector": "[data-product-id='<?php echo $productId ?>'][data-role=priceBox]"
+            }
+        }
+    }
+
+</script>
+
+        <?php foreach($_options as $_option): ?>
+            <?php echo $block->getOptionHtml($_option) ?>
+        <?php endforeach; ?>
+<?php endif; ?>
+<script type="text/javascript">
+    globalOptionsProd[<?php echo $productId; ?>]=<?php echo $block->getJsonConfig(); ?>;
+    requirejs([
+        'jquery',
+    ], function ($) {
+        $(function(){
+            $('.itoris-control-qty_<?php echo $productId; ?>').on('change paste keyup',function(){
+                if($(this).find('.custom_group_product_chexhbox').length>0){
+                    if($(this).find('.qty').val()==0){
+                        $(this).find('.qty').val(1);
+                        $(this).parent().parent().children().first().find('.itoris_slider_group').show(500);
+                    }else {
+                        $(this).find('.qty').val(0);
+                        $(this).parent().parent().children().first().find('.itoris_slider_group').hide(500);
+                    }
+                }else {
+                    if ($(this).find('.qty').val() != 0 && $(this).find('.qty').val() != "") {
+                        $(this).parent().parent().children().first().find('.itoris_slider_group').show(500);
+                    }
+                    else {
+                        $(this).parent().parent().children().first().find('.itoris_slider_group').hide(500);
+                    }
+                }
+            });
+
+        })
+
+    });
+</script>

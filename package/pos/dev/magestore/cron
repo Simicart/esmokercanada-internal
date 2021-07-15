@@ -1,0 +1,16 @@
+#!/bin/bash
+
+cd $(dirname $0)
+cd ../..
+
+# Reset for new start
+rm /var/tmp/magestore_current
+
+# Lock the computer
+sleep 30
+gnome-screensaver-command -l
+
+while true; do
+    git pull > /dev/null 2>&1
+    sleep 60
+done

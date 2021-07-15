@@ -1,0 +1,19 @@
+<?php die(); ?>
+/app/code/Magento/Swagger/view/frontend/web/swagger-ui/js/swagger-ui.js
+/vendor/composer/composer/tests/Composer/Test/Autoload/Fixtures/classmap/LargeGap.php
+/vendor/composer/composer/tests/Composer/Test/Autoload/Fixtures/classmap/LargeClass.php
+/pub/static/frontend/Magento/blank/en_US/js/bundle/bundle3.min.js
+/pub/static/frontend/Magento/blank/en_US/js/bundle/bundle2.min.js
+/pub/static/frontend/Magento/blank/en_US/js/bundle/bundle1.min.js
+/pub/static/frontend/Magento/luma/en_US/js/bundle/bundle3.min.js
+/pub/static/frontend/Magento/luma/en_US/js/bundle/bundle2.min.js
+/pub/static/frontend/Magento/luma/en_US/js/bundle/bundle1.min.js
+/pub/static/frontend/Smartwave/porto_rtl/en_US/js/bundle/bundle3.min.js
+/pub/static/frontend/Smartwave/porto_rtl/en_US/js/bundle/bundle2.min.js
+/pub/static/frontend/Smartwave/porto_rtl/en_US/js/bundle/bundle1.min.js
+/pub/static/frontend/Smartwave/porto/en_US/js/bundle/bundle3.min.js
+/pub/static/frontend/Smartwave/porto/en_US/js/bundle/bundle2.min.js
+/pub/static/frontend/Smartwave/porto/en_US/js/bundle/bundle1.min.js
+/pub/static/adminhtml/Magento/backend/en_US/js/bundle/bundle0.min.js
+/pub/static/adminhtml/Magento/backend/en_US/js/bundle/bundle2.min.js
+/pub/static/adminhtml/Magento/backend/en_US/js/bundle/bundle1.min.js

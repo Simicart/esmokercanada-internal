@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author Cynoinfotech Team
+ * @package Cynoinfotech_ImagesAlt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <cynoinfotech_imagesalt>
+            <general>
+				<enable>1</enable>
+				<imagealt_structure>{product_name}-{auto_increment_number}</imagealt_structure>
+			</general>
+        </cynoinfotech_imagesalt>
+    </default>
+</config>

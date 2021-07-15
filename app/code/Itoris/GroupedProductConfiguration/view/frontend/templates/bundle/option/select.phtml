@@ -1,0 +1,75 @@
+<?php
+/**
+ * ITORIS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the ITORIS's Magento Extensions License Agreement
+ * which is available through the world-wide-web at this URL:
+ * http://www.itoris.com/magento-extensions-license.html
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to sales@itoris.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extensions to newer
+ * versions in the future. If you wish to customize the extension for your
+ * needs please refer to the license agreement or contact sales@itoris.com for more information.
+ *
+ * @category   ITORIS
+ * @package    ITORIS_M2_Itoris_GroupedProductConfiguration
+ * @copyright  Copyright (c) 2016 ITORIS INC. (http://www.itoris.com)
+ * @license    http://www.itoris.com/magento-extensions-license.html  Commercial License
+ */
+?>
+
+<?php /* @var $block \Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option\Select */ ?>
+<?php $_option      = $block->getOption(); ?>
+<?php $_selections  = $_option->getSelections(); ?>
+<?php $_default     = $_option->getDefaultSelection(); ?>
+<?php list($_defaultQty, $_canChangeQty) = $block->getDefaultValues(); ?>
+<?php $productId = $block->getProductBundle()->getId(); ?>
+<div class="field option <?php echo ($_option->getRequired()) ? ' required': ''; ?>">
+    <label class="label" for="bundle-option-<?php /* @escapeNotVerified */ echo $_option->getId() ?>">
+        <span><?php echo $block->escapeHtml($_option->getTitle()) ?></span>
+    </label>
+    <div class="control">
+        <?php if ($block->showSingle()): ?>
+            <?php /* @escapeNotVerified */ echo $block->getSelectionTitlePrice($_selections[0]) ?>
+            <input type="hidden"
+                   class="bundle-option-<?php /* @escapeNotVerified */ echo $_option->getId() ?>  product bundle option"
+                   name="bundle_option[<?php /* @escapeNotVerified */ echo $_option->getId() ?>][<?php echo $productId ?>]"
+                   value="<?php /* @escapeNotVerified */ echo $_selections[0]->getSelectionId() ?>"/>
+        <?php else:?>
+            <select id="bundle-option-<?php /* @escapeNotVerified */ echo $_option->getId() ?>"
+                    name="bundle_option[<?php /* @escapeNotVerified */ echo $_option->getId() ?>][<?php echo $productId ?>]"
+                    class="bundle-option-<?php /* @escapeNotVerified */ echo $_option->getId() ?> product bundle option bundle-option-select change-container-classname"
+                <?php if ($_option->getRequired()) echo 'data-validate = {required:true}' ?>>
+                <option value=""><?php /* @escapeNotVerified */ echo $block->escapeHtml(__('Make a selection...')) ?></option>
+                <?php foreach ($_selections as $_selection): ?>
+                    <option value="<?php /* @escapeNotVerified */ echo $_selection->getSelectionId() ?>"
+                        <?php if ($block->isSelected($_selection)) echo ' selected="selected"' ?>
+                        <?php if (!$_selection->isSaleable()) echo ' disabled="disabled"' ?>>
+                        <?php /* @escapeNotVerified */ echo $block->getSelectionTitlePrice($_selection, false) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        <?php endif; ?>
+        <div class="nested">
+            <div class="field qty qty-holder">
+                <label class="label" for="bundle-option-<?php /* @escapeNotVerified */ echo $_option->getId() ?>-qty-input">
+                    <span><?php /* @escapeNotVerified */ echo $block->escapeHtml(__('Quantity')) ?></span>
+                </label>
+                <div class="control">
+                    <input <?php if (!$_canChangeQty) echo ' disabled="disabled"' ?>
+                           id="bundle-option-<?php /* @escapeNotVerified */ echo $_option->getId() ?>-qty-input"
+                           class="input-text qty<?php if (!$_canChangeQty) echo ' qty-disabled' ?>"
+                           type="number"
+                           name="bundle_option_qty[<?php /* @escapeNotVerified */ echo $_option->getId() ?>][<?php echo $productId ?>]"
+                           value="<?php /* @escapeNotVerified */ echo $_defaultQty ?>"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+{
+  "name": "magebees/module-urlrewrite",
+  "description": "This module allows you to import and export your store URL rewrites data such as store view id, request path, target path, redirect type and description in bulk via csv format.",
+  "type": "magento2-module",
+  "version": "1.0.0",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "authors": [
+    {
+      "name": "MageBees",
+      "email": "support@magebees.com",
+      "homepage": "https://www.magebees.com/",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Magebees\\Urlrewrite\\": ""
+    }
+  }
+}

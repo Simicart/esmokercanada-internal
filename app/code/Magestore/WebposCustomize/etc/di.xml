@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ * Copyright © 2016 Magestore. All rights reserved.
+  ~ * See COPYING.txt for license details.
+  ~
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magestore\Webpos\Model\WebposConfigProvider\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="webpos_customize_config_provider" xsi:type="object">Magestore\WebposCustomize\Model\WebposCustomizeConfigProvider\MirasvitRewardsConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- checkout api -->
+    <preference for="Magestore\WebposCustomize\Api\Cart\CheckoutInterface"
+                type="Magestore\WebposCustomize\Model\Cart\Create"/>
+    <!-- end checkout api -->
+
+    <!-- integration api -->
+    <preference for="Magestore\WebposCustomize\Api\Response\RewardsInterface"
+                type="Magestore\WebposCustomize\Model\Response\Rewards"/>
+
+    <preference for="Magestore\WebposCustomize\Api\Response\SpendPointInterface"
+                type="Magestore\WebposCustomize\Model\Response\SpendPoint"/>
+
+    <preference for="Magestore\WebposCustomize\Api\Rewards\RateRepositoryInterface"
+                type="Magestore\WebposCustomize\Model\Rewards\RateRepository"/>
+
+    <preference for="Magestore\WebposCustomize\Api\Rewards\PointRepositoryInterface"
+                type="Magestore\WebposCustomize\Model\Rewards\PointRepository"/>
+
+    <preference for="Magestore\WebposCustomize\Api\Data\Rewards\SearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults"/>
+    <!-- end integration api -->
+
+    <preference for="Magestore\Webpos\Model\Cart\Create" type="Magestore\WebposCustomize\Model\Cart\Create"/>
+
+    <preference for="Magento\Sales\Block\Order\Totals" type="Magestore\WebposCustomize\Block\Order\Totals"/>
+
+    <preference for="Magestore\Webpos\Model\Customer\CustomerRepository" type="Magestore\WebposCustomize\Model\Customer\CustomerRepository"/>
+</config>

@@ -1,0 +1,71 @@
+<?php
+$couponFeedUrl = $this->getUrl('ultimatefollowupemail/rule/couponsearch', ['_current' => false]);
+$emailTemplateURL = $this->getUrl('ultimatefollowupemail/mail/template', ['_current' => false]);
+$uploadAttachUrl = $this->getUrl('ultimatefollowupemail/rule/upload', ['_current' => false]);
+
+?>
+<script>
+    require([
+        "jquery",
+        "jquery/ui",
+        "Magenest_UltimateFollowupEmail/js/ultimatefollowupemail",
+        "Magenest_UltimateFollowupEmail/js/flexTable",
+        "Magenest_UltimateFollowupEmail/js/sms/smsChain",
+        'Magento_Catalog/catalog/base-image-uploader',
+        'prototype',
+        'varien/js',
+        "domReady!"
+    ], function ($, jqueryui, Fue, Table, smsChain, fileupload, baseImage) {
+
+        var fue = new Fue({
+            mainElement: $('[data-action="followup-email-trigger"]'),
+            nextButton: $('input[data-action="followup-email-next"]')
+        });
+
+        var smsJs = new smsChain();
+
+        var table = new Table({
+            table: $('[data-role="flex-table"]'),
+            getEmailTemplateUrl: '<?php echo $emailTemplateURL ?>'
+        });
+
+        $("select.bind-value").each(function () {
+            $(this).val($(this).data("value"));
+        });
+
+        $("#promotion_rule").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '<?php echo $couponFeedUrl ?>',
+                    data: {
+                        q: request.term
+                    },
+                    success: function (data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 3,
+            select: function (event, ui) {
+                $('#promotion_rule_id').val(ui.item.id);
+            }
+        });
+
+        $(document).ready(function () {
+            $('select[data-role="attach-value"]').each(function () {
+                var realValue = $(this).data('action');
+                $(this).val(realValue);
+            });
+            $('#media_gallery_content').on('addItem', function (event, data) {
+                $dropPlaceholder = $('#media_gallery_content-container').find('.image-placeholder');
+                var IdSelector = '#' + data.label;
+                var prevInput = $(IdSelector);
+                if (prevInput.length < 1) {
+                    var htmlInput = '<input type="hidden" name="' + 'img[]"' + 'id="' + data.label + '"' + 'value="' + data.url + '" >';
+                    var atachInput = $(htmlInput);
+                    atachInput.insertBefore($dropPlaceholder);
+                }
+            });
+        });
+    })
+</script>

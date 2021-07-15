@@ -1,0 +1,133 @@
+<script>
+    require(
+        [
+            'jquery',
+            'Magestore_WebposCustomize/js/model/object-manager'
+        ], function ($) {});
+</script>
+<script>
+    /**
+     * Add feature to filter Order with status "processed_cpc"
+     */
+    require([
+        'jquery',
+        'Magestore_Webpos/js/model/sales/order/status',
+        'Magestore_Webpos/js/model/sales/order/total',
+        'Magestore_Webpos/js/model/event-manager',
+        'mage/translate'
+    ], function ($, OrderStatusModel, OrderTotalModel, Event, __) {
+         var processedCPCOrderStatus = {statusClass: 'processed_cpc', statusTitle: 'Processed_CPC', statusLabel: 'Processed_CPC'};
+        
+         var statusArrayOriginal = OrderStatusModel.getStatusArray;
+         OrderStatusModel.getStatusArray = function () {
+             var statusArray = statusArrayOriginal.apply(OrderStatusModel);
+             statusArray.push('processed_cpc');
+             return statusArray;
+         }
+        
+         var statusObjectOriginal = OrderStatusModel.getStatusObject;
+         OrderStatusModel.getStatusObject = function () {
+             var statusObject = statusObjectOriginal.apply(OrderStatusModel);
+             statusObject.push(processedCPCOrderStatus);
+             return statusObject;
+         }
+
+         var statusObjectViewOriginal = OrderStatusModel.getStatusObjectView;
+         OrderStatusModel.getStatusObjectView = function () {
+             var statusObjectView = statusObjectViewOriginal.apply(OrderStatusModel);
+             statusObjectView.push(processedCPCOrderStatus);
+             return statusObjectView;
+         }
+
+        var totalRewardsEarn =  {totalName: 'rewards_earn', totalLabel: 'You Earn', required: false, isPrice:false, valueLabel:__('Reward Point(s)')};
+        var totalRewardsSpend = {totalName: 'rewards_spent', totalLabel: 'You Spend', required: false, isPrice:false, valueLabel:__('Reward Point(s)')};
+        var totalsArrayOriginal = OrderTotalModel.getTotalOrderView;
+        OrderTotalModel.getTotalOrderView = function() {
+            var totalsArray = totalsArrayOriginal.apply(OrderTotalModel);
+            var array = [];
+            $.each(totalsArray, function (index, value) {
+                array.push(value);
+                if(value.totalName == 'rewardpoints_spent') {
+                    array.push(totalRewardsEarn);
+                    array.push(totalRewardsSpend);
+                }
+            });
+            return array;
+        }
+
+         Event.dispatch('add_order_status_object', processedCPCOrderStatus);
+         Event.observer('order_list_render_after', function(){
+             Event.dispatch('add_order_status_object', processedCPCOrderStatus);
+         });
+    });
+</script>
+<script>
+    /**
+     *
+     */
+    require([
+        'ko',
+        'Magestore_WebposCustomize/js/helper/general',
+        'Magestore_Webpos/js/helper/general',
+        'Magestore_Webpos/js/model/checkout/cart/items/item',
+    ], function (ko, CustomizeHelper, WebposHelper, Item) {
+        //Add rewards into item's initFields
+        WebposHelper.observerEvent('webpos_cart_item_initialize_after', function (event, data) {
+            var initFields = data.fields;
+            if (CustomizeHelper.isMirasvitRewardsEnable()) {
+                initFields.push('item_rewards_point_earn');
+                initFields.push('item_rewards_point_spent');
+                initFields.push('item_rewards_point_discount');
+                initFields.push('item_rewards_base_point_discount');
+            }
+        });
+
+        //Add rewards data into item
+        WebposHelper.observerEvent('webpos_cart_item_init_data_before', function (event, data) {
+            var itemData = data.data;
+            var item = data.item;
+            if (CustomizeHelper.isMirasvitRewardsEnable() && data && item) {
+                item.item_rewards_point_earn = (typeof itemData.item_rewards_point_earn != "undefined") ? ko.observable(itemData.item_rewards_point_earn) : ko.observable();
+                item.item_rewards_point_spent = (typeof itemData.item_rewards_point_spent != "undefined") ? ko.observable(itemData.item_rewards_point_spent) : ko.observable();
+                item.item_rewards_point_discount = (typeof itemData.item_rewards_point_discount != "undefined") ? ko.observable(itemData.item_rewards_point_discount) : ko.observable();
+                item.item_rewards_base_point_discount = (typeof itemData.item_rewards_base_point_discount != "undefined") ? ko.observable(itemData.item_rewards_base_point_discount) : ko.observable();
+            }
+        });
+
+        //Add reward data into item's extension_data when checkout online
+        WebposHelper.observerEvent('webpos_cart_item_prepare_info_buy_request_after', function (event, data) {
+            var infobuy = data.buy_request;
+            var item = data.item;
+            if (CustomizeHelper.isMirasvitRewardsEnable() && infobuy && item) {
+                infobuy.extension_data.push({
+                    key: "rewards_earn",
+                    value: WebposHelper.correctPrice(item.item_rewards_point_earn())
+                });
+                infobuy.extension_data.push({
+                    key: "rewards_spent",
+                    value: WebposHelper.correctPrice(item.item_rewards_point_spent())
+                });
+                infobuy.extension_data.push({
+                    key: "rewards_discount",
+                    value: WebposHelper.correctPrice(item.item_rewards_point_discount())
+                });
+                infobuy.extension_data.push({
+                    key: "rewards_base_discount",
+                    value: WebposHelper.correctPrice(item.item_rewards_base_point_discount())
+                });
+            }
+        });
+
+        WebposHelper.observerEvent('webpos_cart_process_extra_total_from_quote_after', function(event, data){
+            var totalData = data.data;
+            var total = data.total;
+            if (totalData.code == "rewards_label" || totalData.code == "rewards_spend_label") {
+                total.setData('isPrice', false);
+                total.setData('formated', totalData.value + ' ' + totalData.unit);
+            }
+            if (totalData.code == "rewards_spend_label" && !totalData.value) {
+                total.setData('isVisible', false);
+            }
+        });
+    });
+</script>

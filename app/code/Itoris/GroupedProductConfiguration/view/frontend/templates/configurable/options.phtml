@@ -1,0 +1,178 @@
+<?php
+/**
+ * ITORIS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the ITORIS's Magento Extensions License Agreement
+ * which is available through the world-wide-web at this URL:
+ * http://www.itoris.com/magento-extensions-license.html
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to sales@itoris.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extensions to newer
+ * versions in the future. If you wish to customize the extension for your
+ * needs please refer to the license agreement or contact sales@itoris.com for more information.
+ *
+ * @category   ITORIS
+ * @package    ITORIS_M2_Itoris_GroupedProductConfiguration
+ * @copyright  Copyright (c) 2016 ITORIS INC. (http://www.itoris.com)
+ * @license    http://www.itoris.com/magento-extensions-license.html  Commercial License
+ */
+
+
+?>
+<?php
+/** @var $block \Magento\ConfigurableProduct\Block\Product\View\Type\Configurable*/
+$_product    = $block->getProduct();
+$confBlock = $block->getLayout()->createBlock('Magento\Swatches\Block\Product\Renderer\Configurable');
+$confBlock->setProduct($_product);
+$_attributes = $confBlock->decorateArray($confBlock->getAllowAttributes());
+?>
+<?php $layout = $block->getLayout(); ?>
+<?php $childName=$layout->getChildName('itoris.grouped.product.info.options','date'); ?>
+<?php
+
+if($childName) {
+    $child = $layout->getBlock($childName);
+    if ($child) {
+        $child->setTemplate('Itoris_GroupedProductConfiguration::date.phtml');
+    }
+}
+?>
+<?php $childName=$layout->getChildName('itoris.grouped.product.info.options','file'); ?>
+
+<?php
+
+if($childName) {
+    $child = $layout->getBlock($childName);
+    if ($child) {
+        $child->setTemplate('Itoris_GroupedProductConfiguration::file.phtml');
+    }
+}
+$swatces=$block->getLayout()->createBlock('Itoris\GroupedProductConfiguration\Block\Frontend\Configurable');
+$swatces->setProduct($_product)->setTemplate('Itoris_GroupedProductConfiguration::renderer.phtml');
+$html =$swatces->toHtml();
+?>
+<?php if(!empty($html)): ?>
+<?php  echo $html; ?>
+<?php endif; ?>
+<?php if ($_product->isSaleable() && count($_attributes)):?>
+    <?php if(empty($html)): ?>
+    <?php foreach ($_attributes as $_attribute): ?>
+        <div class="field configurable required">
+            <label class="label" for="attribute<?php /* @escapeNotVerified */ echo $_attribute->getAttributeId() ?>">
+                <span><?php echo $confBlock->escapeHtml($_attribute->getProductAttribute()->getStoreLabel()) ?></span>
+            </label>
+            <div class="control">
+                <select name="super_attribute[<?php echo $_product->getId(); ?>][<?php /* @escapeNotVerified */ echo $_attribute->getAttributeId() ?>]"
+                        data-validate="{required:true}"
+                        data-product="<?php echo $_product->getId(); ?>"
+                        id="attribute<?php /* @escapeNotVerified */ echo $_attribute->getAttributeId() ?>"
+                        class="super-attribute-select super-attrribut-product<?php echo $_product->getId(); ?>">
+                    <option value=""><?php /* @escapeNotVerified */ echo $block->escapeHtml(__('Choose an Option...')) ?></option>
+                </select>
+            </div>
+        </div>
+            <script type="text/x-magento-init">
+        {
+            "#product_addtocart_form": {
+                "configurableCustom": {
+                    "spConfig": <?php /* @escapeNotVerified */ echo $confBlock->getJsonConfig() ?>
+                }
+            }
+        }
+    </script>
+    <?php endforeach; ?>
+
+      <?php endif; ?>
+    <script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "priceOptionsCustom": {
+                "productId": <?php echo $_product->getId() ?>,
+                "optionConfig": <?php /* @escapeNotVerified */ echo $block->getJsonConfig()?>,
+                "controlContainer": ".field",
+                "priceHolderSelector": "[data-product-id='<?php echo $_product->getId() ?>'][data-role=priceBox]"
+            }
+        }
+    }
+
+</script>
+    <script>
+        spConfig[incrementConf]=[];
+        configurableProduct[<?php echo $_product->getId();  ?>]=<?php echo $_product->getId();  ?>;
+        spConfig[incrementConf]['productId']=<?php echo $_product->getId(); ?>;
+        spConfig[incrementConf]['spConfig']= <?php /* @escapeNotVerified */ echo $confBlock->getJsonConfig() ?>;
+        incrementConf++;
+    </script>
+<?php endif;?>
+<?php  /* @var $block Mage_Catalog_Block_Product_View_Options*/ ?>
+<?php $_options = $block->decorateArray($block->getOptions()) ?>
+<?php $productId = $block->getProduct()->getId(); ?>
+<?php if (count($_options)):?>
+        <?php foreach($_options as $_option): ?>
+            <?php echo $block->getOptionHtml($_option) ?>
+        <?php endforeach; ?>
+<?php endif; ?>
+<script type="text/javascript">
+    globalOptionsProd[<?php echo $productId; ?>]=<?php echo $block->getJsonConfig(); ?>;
+    requirejs([
+        'jquery',
+        'prototype'
+    ], function ($) {
+        // Custom prototype function to fire an event
+        // http://stackoverflow.com/questions/460644/trigger-an-event-with-prototype
+        function triggerEvent(element, eventName) {
+            // safari, webkit, gecko
+            if (document.createEvent)
+            {
+                var evt = document.createEvent('HTMLEvents');
+                evt.initEvent(eventName, true, true);
+
+                return element.dispatchEvent(evt);
+            }
+
+            // Internet Explorer
+            if (element.fireEvent) {
+                return element.fireEvent('on' + eventName);
+            }
+        }
+        $(function(){
+            $('.itoris-control-qty-configurable_<?php echo $productId; ?>').on('change paste keyup',function(){
+                if($(this).find('.custom_group_product_chexhbox').length>0){
+                    if($(this).find('.qty').val()<1){
+                        $('.itoris-input-swatch-<?php echo $productId; ?>').attr('data-validate','{required:true}');
+                        $('.itoris-input-swatch-<?php echo $productId; ?>').attr('aria-required','true');
+                        $('.itoris-input-swatch-<?php echo $productId; ?>').attr('aria-invalid','true');
+                        $(this).find('.qty').val(1);
+                        $(this).parent().parent().children().first().find('.itoris_slider_group').show(500);
+                    }else {
+                        $('.itoris-input-swatch-<?php echo $productId; ?>').attr('data-validate','{required:false}');
+                        $('.itoris-input-swatch-<?php echo $productId; ?>').removeAttr('aria-required');
+                        $('.itoris-input-swatch-<?php echo $productId; ?>').removeAttr('aria-invalid');
+                        $(this).find('.qty').val(0);
+                        $(this).parent().parent().children().first().find('.itoris_slider_group').hide(500);
+                    }
+                }else {
+                    if ($(this).find('.qty').val() > 0 && $(this).find('.qty').val() != "") {
+                        $('.itoris-input-swatch-<?php echo $productId; ?>').attr('data-validate','{required:true}');
+                        $('.itoris-input-swatch-<?php echo $productId; ?>').attr('aria-required','true');
+                        $('.itoris-input-swatch-<?php echo $productId; ?>').attr('aria-invalid','true');
+                        $(this).parent().parent().children().first().find('.itoris_slider_group').show(500);
+                    }
+                    else {
+                        $('.itoris-input-swatch-<?php echo $productId; ?>').attr('data-validate','{required:false}');
+                        $('.itoris-input-swatch-<?php echo $productId; ?>').removeAttr('aria-required');
+                        $('.itoris-input-swatch-<?php echo $productId; ?>').removeAttr('aria-invalid');
+                        $(this).parent().parent().children().first().find('.itoris_slider_group').hide(500);
+                    }
+                }
+            });
+            $('.itoris-control-qty-configurable_<?php echo $productId; ?> .custom_group_product_chexhbox:checked').trigger('change').trigger('change');
+        });
+    });
+</script>

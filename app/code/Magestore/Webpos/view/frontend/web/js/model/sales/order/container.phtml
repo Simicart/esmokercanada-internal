@@ -1,0 +1,35 @@
+<script>
+    require([
+        'Magestore_Webpos/js/model/sales/order/status',
+        'Magestore_Webpos/js/model/event-manager',
+        'mage/translate'
+    ], function (OrderStatusModel, Event, __) {
+        // var processedCPCOrderStatus = {statusClass: 'processed_cpc', statusTitle: 'Processed_CPC', statusLabel: 'Processed_CPC'};
+        
+        // var statusArrayOriginal = OrderStatusModel.getStatusArray;
+        // OrderStatusModel.getStatusArray = function () {
+        //     var statusArray = statusArrayOriginal.apply(OrderStatusModel);
+        //     statusArray.push('processed_cpc');
+        //     return statusArray;
+        // }
+        
+        // var statusObjectOriginal = OrderStatusModel.getStatusObject;
+        // OrderStatusModel.getStatusObject = function () {
+        //     var statusObject = statusObjectOriginal.apply(OrderStatusModel);
+        //     statusObject.push(processedCPCOrderStatus);
+        //     return statusObject;
+        // }
+
+        // var statusObjectViewOriginal = OrderStatusModel.getStatusObjectView;
+        // OrderStatusModel.getStatusObjectView = function () {
+        //     var statusObjectView = statusObjectViewOriginal.apply(OrderStatusModel);
+        //     statusObjectView.push(processedCPCOrderStatus);
+        //     return statusObjectView;
+        // }
+
+        // Event.dispatch('add_order_status_object', processedCPCOrderStatus);
+        // Event.observer('order_list_render_after', function(){
+        //     Event.dispatch('add_order_status_object', processedCPCOrderStatus);
+        // });
+    });
+</script>

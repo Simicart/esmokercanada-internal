@@ -1,0 +1,43 @@
+<?php
+$suffix = "";
+$prefix = "";
+$request_action = $this->getRequest()->getFullActionName();
+if ($request_action == 'cms_index_index') {
+    //you are on the homepage
+    $suffix = "home";
+}
+if ($request_action == 'catalog_product_view') {
+    //you are on the product page
+    $suffix = "product";
+}
+if ($request_action == 'catalog_category_view') {
+    $suffix = "category";
+    //es_tag_category
+}
+if ($request_action == 'cms_page_view') {
+    $suffix = "info";
+    //es_tag_category
+}
+
+/*$writer = new \Zend\Log\Writer\Stream(BP . '/var/log/custom_design.log');
+$logger = new \Zend\Log\Logger();
+$logger->addWriter($writer);
+$logger->info($block->getStaticBlockPrefix());*/
+$prefix = $block->getStaticBlockPrefix();
+
+if($suffix != "" && $prefix != "" && $suffix != "info"){
+    $identifier = $prefix."_tag_".$suffix;
+    if($block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($identifier)->toHtml()){
+        echo "<div class='container' id='custom-tag-block'>".$block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($identifier)->toHtml()."</div>";
+        if($suffix == "home" && $prefix == "es"){
+            echo "<script>jQuery('#custom-tag-block').insertAfter('#banner-slider-demo-1')</script>";
+        }
+    }
+}
+
+if($suffix == "info"){
+    $identifier = $prefix."_tag_".$suffix;
+}
+
+
+?>

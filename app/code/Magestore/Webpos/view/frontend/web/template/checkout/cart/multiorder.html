@@ -1,0 +1,20 @@
+<span class="order-button square icon-iconPOS-on-hold-order" style="font-size: 26px"></span>
+<!-- ko foreach: {data: items} -->
+<span class="order-button square multiorder-item"
+      data-bind="
+       css: {'selected': ($parents[0].currentId() === entity_id)}">
+    <span data-bind="click: $parents[0].processItem.bind($parents[0])" style="width: 100%;height: 100%;display: block;">
+          <span class="order-sequence" data-bind="text: ($index() + 1)"></span>
+        <!-- ko if: $parents[0].showDateTime -->
+        <!-- ko text: $parents[0].getTime(created_at) --><!-- /ko -->
+        <!-- /ko -->
+    </span>
+
+   <span style="position: absolute;right: 0;top: -16px;display: block;z-index: 99999;
+
+            width: 20px; height: 20px;" data-bind="click: $parents[0].removeSession.bind($parents[0])">x</span>
+</span>
+<!-- /ko -->
+<span class="order-button square pull-right" data-bind="click: addNewSession">+</span>
+
+

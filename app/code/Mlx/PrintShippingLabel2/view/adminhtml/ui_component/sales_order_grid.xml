@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction">          
+            <action name="mlx_print_shipping_label">               
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">mlx_print_shipping_label</item>
+                        <item name="label" xsi:type="string" translate="true">Print Shipping Labels [MLX]</item>
+                        <item name="url" xsi:type="url" path="printshippinglabel/order/massPrintShippingLabel"/>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+    </listingToolbar>
+</listing>
+
+<!--
+<?xml version="1.0" encoding="UTF-8"?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <container name="listing_top">       
+        <massaction name="listing_massaction">          
+            <action name="mlx_print_shipping_label">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">mlx_print_shipping_label</item>
+                        <item name="label" xsi:type="string" translate="true">Print Shipping Labels [MLX]</item>
+                        <item name="url" xsi:type="url" path="printshippinglabel/order/massPrintShippingLabel"/>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+        
+    </container>
+</listing>
+ -->

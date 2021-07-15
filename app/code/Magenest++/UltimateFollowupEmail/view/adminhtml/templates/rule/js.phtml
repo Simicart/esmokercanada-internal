@@ -1,0 +1,111 @@
+<?php
+/**
+ * Created by Magenest
+ * User: Luu Thanh Thuy
+ * Date: 30/09/2015
+ * Time: 09:34
+ */
+
+
+$couponFeedUrl = $this->getUrl('ultimatefollowupemail/rule/couponsearch', ['_current'=>false ]);
+$emailTemplateURL = $this->getUrl('ultimatefollowupemail/mail/template', ['_current'=>false ]);
+$uploadAttachUrl = $this->getUrl('ultimatefollowupemail/rule/upload', ['_current'=>false ]);
+
+?>
+<script>
+   require([
+       "jquery",
+       "jquery/ui",
+
+       "Magenest_UltimateFollowupEmail/js/ultimatefollowupemail",
+        "Magenest_UltimateFollowupEmail/js/flexTable",
+        "Magenest_UltimateFollowupEmail/js/sms/smsChain",
+       'Magento_Catalog/catalog/base-image-uploader',
+       'prototype',
+        'varien/js',
+       "domReady!"
+    ], function ($,jqueryui,Fue, Table,smsChain,fileupload,baseImage) {
+
+        var fue = new Fue({
+            mainElement : $('[data-action="followup-email-trigger"]') ,
+            nextButton : $('input[data-action="followup-email-next"]')
+        });
+
+       var table = new Table({table : $('[data-role="flex-table"]'),getEmailTemplateUrl:'<?php echo $emailTemplateURL ?>'});
+
+        jQuery("select.bind-value").each(function() {
+           jQuery(this) .val(jQuery(this).data("value"));
+        })
+
+
+       //
+       jQuery("#promotion_rule").autocomplete({
+           source:function( request, response ) {
+               jQuery.ajax({
+                   url: '<?php echo  $couponFeedUrl ?>',
+
+                   data: {
+                       q: request.term
+                   },
+                   success: function( data ) {
+                       console.log(data);
+                       response(data );
+                   }
+               });
+           },
+           minLength: 3,
+           select: function(event, ui) {
+             console.log(ui.item);
+              jQuery('#promotion_rule_id').val(ui.item.id);
+
+           }
+       });
+       var sms = new smsChain();
+
+       $(document).ready(function() {
+           $('select[data-role="attach-value"]').each(function() {
+               var realValue = $(this).data('action');
+
+               $(this).val(realValue);
+           });
+
+           $('#media_gallery_content').on('addItem', function (event, data) {
+
+              // console.log(data);
+               //alert(data.url);
+                 $dropPlaceholder = $('#media_gallery_content-container').find('.image-placeholder');
+               var IdSelector = '#' + data.label;
+               var prevInput = $(IdSelector);
+
+               if (prevInput.length < 1) {
+                   var htmlInput ='<input type="hidden" name="' + 'img[]"' + 'id="' + data.label + '"' +  'value="' + data.url + '" >';
+                   var atachInput= $(htmlInput);
+                    atachInput.insertBefore($dropPlaceholder);
+
+               }
+
+           });
+
+           //on delete an attachment
+
+    /*       $('#media_gallery_content').on('removeItem', function (event, data) {
+               if (data != undefined) {
+                   var IdSelector = '#' + data.label;
+                   console.log(IdSelector);
+                   var prevInput = $(IdSelector);
+                   if (prevInput.length > 0 ) {
+                       prevInput.remove();
+                   }
+               } else {
+                   console.log(event);
+               }
+
+           });*/
+           //end of delete an attachment
+
+           //init the value for the attachment
+
+           });
+
+    })
+</script>

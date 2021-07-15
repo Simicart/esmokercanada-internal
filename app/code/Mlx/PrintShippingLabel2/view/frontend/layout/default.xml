@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Mlx_PrintShippingLabel2::css/style.css"/>
+    </head>
+    <body>
+        <referenceContainer name="after.body.start">
+            <block class="Magento\Framework\View\Element\Template" name="mlx_printshippinglabel_js" template="Mlx_PrintShippingLabel2::js.phtml"/>
+        </referenceContainer>        
+    </body>
+</page>

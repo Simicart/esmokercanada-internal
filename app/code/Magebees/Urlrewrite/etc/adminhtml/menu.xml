@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
+	<menu>
+		<add id="Magebees_Urlrewrite::Heading" title="MageBees - Import/Export URL Rewrites " module="Magebees_Urlrewrite" sortOrder="50" parent="Magento_Backend::system" resource="Magebees_Urlrewrite::Heading" />
+			<add id="Magebees_Urlrewrite::import" title="Import URL Rewrites"  action="urlrewrite/importurlrewrite/index" module="Magebees_Urlrewrite" sortOrder="2" parent="Magebees_Urlrewrite::Heading"  resource="Magebees_Urlrewrite::import"/>
+			<add id="Magebees_Urlrewrite::export" title="Export URL Rewrites"  action="urlrewrite/exporturlrewrite/index" module="Magebees_Urlrewrite" sortOrder="3" parent="Magebees_Urlrewrite::Heading"  resource="Magebees_Urlrewrite::export"/>
+	</menu>
+</config>
+

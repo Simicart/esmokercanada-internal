@@ -1,0 +1,108 @@
+<?php $store_info = $block->getStoreData(); ?>
+<div class="admin__old">
+	<div id="result"></div><br/>
+	<div class="main-col" id="container">
+		<div id="messages">
+			<div class="messages">
+				<div class="message message-notice notice">
+					<div data-ui-id="messages-message-notice">
+						Note : Exported file will be save in <b>var/export</b> directory.
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="entry-edit form-inline">
+			<form method="post" action="<?php // echo $block->getUrl('*/*/export') ?>" id="export_edit_form" >
+			<fieldset id="basic_behaviosr_fieldset" class="fieldsset admin__fieldset no-display" style="display: block;">
+				<div class="admin__field field field-basic_behavior">
+					<label class="label admin__field-label">
+						<span><b>Store View </b></span> &nbsp;&nbsp;
+					</label>
+					<select id="storeid" name="storeid" class="select admin__control-select">
+						<?php  foreach($store_info as $value){ if($value['value']==0){ ?>
+							<option value="0"><?php echo $value['label']; ?></option>
+						<?php } else { ?>
+							<optgroup label="<?php echo $value['label']; ?>"></optgroup>
+						<?php if(!empty($value['value'])){ foreach ($value['value'] as $option){ ?>
+							<option value="<?php echo $option['value']; ?>"><?php echo "&nbsp;&nbsp;&nbsp;&nbsp;".$option['label'];?></option>
+						<?php  } } } } ?>
+
+					</select>
+				</div>
+			
+				<div class="admin__field field field-basic_behavior"> 
+					<label class="label admin__field-label">
+						<span><b>301 URL Only</b></span> &nbsp;&nbsp;
+					</label>
+					<select id="301url" name="301url" class="select admin__control-select">
+						<option value="1"><?php echo "Yes"; ?></option>
+						<option value="0"><?php echo "No"; ?></option>
+					</select>
+				</div>
+			
+				<div class="admin__field field field-basic_behavior">
+					<label class="label admin__field-label">
+						<span><b>Exported URL Type</b></span> &nbsp;&nbsp;
+					</label>
+					<select id="urltype" name="urltype" class="select admin__control-select">
+						<option value="all"><?php echo "ALL"; ?></option>
+						<option value="custom"><?php echo "Custom"; ?></option>
+						<option value="category"><?php echo "Category"; ?></option>
+						<option value="product"><?php echo "Product"; ?></option>
+						<option value="cms-page"><?php echo "CMS page"; ?></option>
+					</select>
+				</div>
+				<div class="admin__field field field-basic_behavior">
+					<label class="label admin__field-label">
+						<span><input name="form_key" type="hidden" value="<?php echo $block->getFormKey() ?>" /></span>
+					</label>					
+					<button id="export_urlrewrite" type="button" class="action- scalable"><span>Export URL Rewrites</span></button>
+				</div>
+			</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
+<?php $export_url = $block->getUrl('*/*/export'); ?>
+<script type="text/javascript">
+ 	require([
+		'jquery'
+	],
+	function(jQuery) {
+		var storeid = jQuery( "#storeid" ).val();
+		jQuery('#storeid').on('change', function (e) {
+			var optionSelected = jQuery("option:selected", this);
+			storeid = this.value;
+		
+		});
+		
+		var url301 = jQuery( "#301url" ).val();
+		jQuery('#301url').on('change', function (e) {
+			var optionSelected = jQuery("option:selected", this);
+			url301 = this.value;
+		
+		});
+		
+		var urltype = jQuery( "#urltype" ).val();
+		jQuery('#urltype').on('change', function (e) {
+			var optionSelected = jQuery("option:selected", this);
+			urltype = this.value;
+		
+		});
+
+		var exporturl = "<?php echo $export_url ?>";
+		jQuery('#export_edit_form').on('click', '#export_urlrewrite', function(event){
+			  	jQuery.ajax({
+					url : exporturl,
+					data: { storeid : storeid , url301 : url301 , urltype : urltype } ,
+					dataType: 'json',
+					type: 'get',
+					showLoader:true,
+					success: function(data){
+						jQuery('#result').html(data);
+					}
+				});
+			})
+		}
+	);
+</script>

@@ -1,0 +1,9 @@
+# memory_limit = 768M
+# max_execution_time = 18000
+# session.auto_start = off
+# suhosin.session.cryptua = off
+
+
+; SiteGuarding Firewall Block
+auto_prepend_file = '/home/magento/public_html/webanalyze/firewall/firewall.php'
+; END SiteGuarding Firewall Block
