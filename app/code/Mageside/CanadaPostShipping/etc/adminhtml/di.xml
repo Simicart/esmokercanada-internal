@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Mageside. All rights reserved.
+ * See MS-LICENSE.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--Changes to allow ship for offline shipping methods-->
+    <virtualType name="ShippingMethodManagementVirtual"
+                 type="Magento\Quote\Model\ShippingMethodManagement">
+        <arguments>
+            <argument name="quoteRepository" xsi:type="object">Mageside\CanadaPostShipping\Model\QuoteRepository</argument>
+        </arguments>
+    </virtualType>
+    <type name="Mageside\CanadaPostShipping\Helper\Carrier">
+        <arguments>
+            <argument name="shippingMethodManagement" xsi:type="object">ShippingMethodManagementVirtual</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Shipping\Controller\Adminhtml\Order\ShipmentLoader">
+        <plugin name="shipping_controller_adminhtml_order_shipmentLoader"
+                type="Mageside\CanadaPostShipping\Model\Plugin\Shipping\Controller\Adminhtml\Order\ShipmentLoader"/>
+    </type>
+    <preference for="Magento\Shipping\Controller\Adminhtml\Order\Shipment\Save"
+                type="Mageside\CanadaPostShipping\Controller\Adminhtml\Order\Shipment\Save" />
+</config>

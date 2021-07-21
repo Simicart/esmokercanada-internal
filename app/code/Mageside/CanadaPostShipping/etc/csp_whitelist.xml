@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Mageside. All rights reserved.
+ * See MS-LICENSE.txt for license details.
+ */
+-->
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+        <policies>
+            <policy id="img-src">
+                <values>
+                    <value id="mageside_media" type="host">mageside.com</value>
+                    <value id="mageside_canadapost_media" type="host">*.canadapost.ca</value>
+                    <value id="mageside_googleapis_media" type="host">*.googleapis.com</value>
+                    <value id="mageside_gstatic_media" type="host">*.gstatic.com</value>
+                    <value id="mageside_gmaps_media" type="host">data:</value>
+                </values>
+            </policy>
+            <policy id="script-src">
+                <values>
+                    <value id="mageside_googleapis_scripts" type="host">*.googleapis.com</value>
+                    <value id="mageside_google_scripts" type="host">*.google.com</value>
+                    <value id="mageside_gstatic_scripts" type="host">*.gstatic.com</value>
+                </values>
+            </policy>
+            <policy id="font-src">
+                <values>
+                    <value id="mageside_googleapis_fonts" type="host">*.googleapis.com</value>
+                    <value id="mageside_gstatic_fonts" type="host">*.gstatic.com</value>
+                </values>
+            </policy>
+            <policy id="style-src">
+                <values>
+                    <value id="mageside_googleapis_styles" type="host">*.googleapis.com</value>
+                </values>
+            </policy>
+            <policy id="form-action">
+                <values>
+                    <value id="mageside_canadapost_redirect" type="host">*.canadapost.ca</value>
+                    <value id="mageside_sso_epost_redirect" type="host">https://sso.epost.ca</value>
+                </values>
+            </policy>
+        </policies>
+</csp_whitelist>

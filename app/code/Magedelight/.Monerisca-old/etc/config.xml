@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/*
+* Magedelight
+* Copyright (C) 2017 Magedelight <info@magedelight.com>
+*
+* @category Magedelight
+* @package Magedelight_Monerisca
+* @copyright Copyright (c) 2017 Mage Delight (http://www.magedelight.com/)
+* @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+* @author Magedelight <info@magedelight.com>
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <md_monerisca>
+                <active>0</active>
+                <title>Monerisca By MageDelight</title>
+                <order_status>processing</order_status>
+                <test>1</test>
+                <debug>1</debug>
+                <cctypes>AE,VI,MC,DI</cctypes>
+                <save_optional>1</save_optional>
+                <model>Magedelight\Monerisca\Model\Payment</model>
+            </md_monerisca>
+        </payment>
+    </default>
+</config>

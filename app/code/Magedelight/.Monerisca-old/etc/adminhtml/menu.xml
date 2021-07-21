@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Magedelight
+* Copyright (C) 2017 Magedelight <info@magedelight.com>
+*
+* @category Magedelight
+* @package Magedelight_Monerisca
+* @copyright Copyright (c) 2017 Mage Delight (http://www.magedelight.com/)
+* @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+* @author Magedelight <info@magedelight.com>
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <!-- main -->
+        <add id="Magedelight_Monerisca::monerisca_root"
+             title="Moneris CA"
+             module="Magedelight_Monerisca"
+             sortOrder="50" 
+             resource="Magedelight_Monerisca::root"
+             toolTip="magedelight_base"/>
+        
+        <add id="Magedelight_Monerisca::monerisca_root_commonlyvisible"
+             title="Moneris CA Payment Gateway"
+             module="Magedelight_Monerisca"
+             sortOrder="10"
+             parent="Magedelight_Base::md_modules"
+             resource="Magedelight_Monerisca::root"/>
+        <add id="Magedelight_Monerisca::settings"
+             title="Settings" 
+             translate="title" 
+             module="Magedelight_Monerisca"
+             parent="Magedelight_Monerisca::monerisca_root"
+             action="adminhtml/system_config/edit/section/payment/" 
+             sortOrder="80" 
+             resource="Magedelight_Monerisca::settings" />
+    </menu>
+</config>

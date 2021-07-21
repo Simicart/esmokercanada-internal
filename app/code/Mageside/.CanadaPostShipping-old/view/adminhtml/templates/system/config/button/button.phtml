@@ -1,0 +1,33 @@
+<?php
+/**
+ * Copyright © 2018 Mageside. All rights reserved.
+ * See MS-LICENSE.txt for license details.
+ */
+/** @var \Mageside\CanadaPostShipping\Block\Adminhtml\System\Config\Field\RegisterButton $block */
+?>
+
+<div class="actions actions-validate-vat">
+    <div id="<?= /* @escapeNotVerified */ $block->escapeHtml($block->getId()) ?>" class="message-validation hidden"></div>
+    <button class="action-validate-vat" type="button" id="button-<?= /* @escapeNotVerified */ $block->getId() ?>">
+        <span><?= /* @escapeNotVerified */ $block->escapeHtml($block->getButtonLabel()) ?></span>
+    </button>
+</div>
+
+<script data-role="canada-post-register-form-tmpl" type="text/x-magento-template">
+    <form action="<?= /* @escapeNotVerified */ $block->getRegistrationMerchantUrl() ?>">
+        <input type="hidden" name="return-url" value="<?= /* @escapeNotVerified */ $block->getReturnUrl() ?>" />
+        <input type="hidden" name="platform-id"  value="<?= /* @escapeNotVerified */ $block->getPlatformId() ?>" />
+        <input type="hidden" name="token-id" value="<%= tokenId %>" />
+    </form>
+</script>
+
+<script type="text/x-magento-init">
+    {
+        "#button-<?php echo  $block->getId(); ?>": {
+            "Mageside_CanadaPostShipping/js/register": {
+                 "ajax_url": "<?php /* @noEscape */ echo $block->getAjaxUrl() ?>",
+                 "registration_form": "[data-role='canada-post-register-form-tmpl']"
+            }
+        }
+    }
+</script>
